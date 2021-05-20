@@ -1,0 +1,13 @@
+﻿@using GestaoDeEstoque3D.Dapper.Core
+
+@{
+    ViewBag.Title = "Início";
+
+    ViewBag.Versao = new SistemaConfiguracaoCore().RetornarPorNome("versao").Valor;
+}
+
+<h2>Início - Gestão de Estoque 3D</h2>
+
+<a href="/Estante">Estantes</a>
+
+<a href="/Planta2D">Planta 2D</a>

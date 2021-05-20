@@ -1,0 +1,37 @@
+﻿@using GestaoDeEstoque3D.Dapper.Core
+
+@{
+    ViewBag.Title = "Planta 2D";
+
+    ViewBag.Versao = new SistemaConfiguracaoCore().RetornarPorNome("versao").Valor;
+}
+
+<head>
+    <link type="text/css" rel="stylesheet" href="~/Libraries/leaflet/leaflet.css?v=@ViewBag.Versao">
+    <link type="text/css" rel="stylesheet" href="~/Libraries/leaflet-geoman/leaflet-geoman.css?v=@ViewBag.Versao">
+
+    <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/Planta.css?v=@ViewBag.Versao">
+</head>
+
+<h2>Planta 2D - Gestão de Estoque 3D</h2>
+
+<div class="planta-container">
+    <div id="planta"></div>
+</div>
+
+<div id="ModalNovoPoligono" class="modal-template-container">
+    <div class="modal-template-inner-container" style="box-shadow: 0px 0px 20px 2px black;">
+        <div class="modal-template-header">
+            <h2 class="modal-h2">Escolha a camada para criar o polígono</h2>
+        </div>
+        <div class="modal-template-body">
+            <select class="select-template" id="select-camada-novo-poligono"></select>
+            <button type="button" class="button-template" id="btnNovoPoligono">Criar</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/Libraries/leaflet/leaflet.js?v=@ViewBag.Versao"></script>
+<script src="~/Libraries/leaflet-geoman/leaflet-geoman.min.js?v=@ViewBag.Versao"></script>
+
+<script src="~/Scripts/Planta2D/planta.js?v=@ViewBag.Versao"></script>
