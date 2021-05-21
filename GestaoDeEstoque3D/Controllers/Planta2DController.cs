@@ -22,6 +22,7 @@ namespace GestaoDeEstoque3D.Controllers
         {
             var camadas = new CamadaCore().RetornarTodos();
             var poligonos = new PoligonoCore().RetornarTodos();
+            var estantesAssociadas = new EstanteCore().RetornarEstantesAssociadas();
 
             var camadasGeojson = new List<CamadaGeojsonVM>();
 
@@ -34,13 +35,21 @@ namespace GestaoDeEstoque3D.Controllers
                 camadasGeojson.Add(camadaGeojson);
             }
 
-            var response = camadasGeojson.Select(i => new
+            var response = new
             {
-                i.CamadaId,
-                i.CamadaNome,
-                i.CamadaGeojson,
-                i.CamadaCor
-            });
+                camadasGeojson = camadasGeojson.Select(i => new
+                {
+                    i.CamadaId,
+                    i.CamadaNome,
+                    i.CamadaGeojson,
+                    i.CamadaCor
+                }),
+                estantesAssociadas = estantesAssociadas.Select(est => new { 
+                    est.Id,
+                    est.QuantidadePrateleiras,
+                    est.PoligonoId,
+                })
+            };
 
             var return_json = Json(response, JsonRequestBehavior.AllowGet);
             return_json.MaxJsonLength = int.MaxValue;

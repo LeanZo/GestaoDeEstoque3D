@@ -65,5 +65,49 @@ namespace GestaoDeEstoque3D.Controllers
 
             return Json("", JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult EditarEstante(string JsonEstante)
+        {
+            var definition = new
+            {
+                Id = new int(),
+                QtdPrateleiras = new int(),
+                LarguraPrat = "",
+                AlturaPrat = "",
+                ProfundidadePrat = "",
+                PesoMaximoPrat = "",
+            };
+
+            var jsonEstante = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(JsonEstante, definition);
+
+            var core = new EstanteCore();
+
+            var estante = core.RetornarPorId(jsonEstante.Id);
+
+            estante.QuantidadePrateleiras = jsonEstante.QtdPrateleiras;
+            estante.LarguraPrateleiras = Convert.ToDouble(jsonEstante.LarguraPrat.Replace(',', '.'), CultureInfo.GetCultureInfo("en-US"));
+            estante.AlturaPrateleiras = Convert.ToDouble(jsonEstante.AlturaPrat.Replace(',', '.'), CultureInfo.GetCultureInfo("en-US"));
+            estante.ProfundidadePrateleiras = Convert.ToDouble(jsonEstante.ProfundidadePrat.Replace(',', '.'), CultureInfo.GetCultureInfo("en-US"));
+            estante.PesoMaximoPrateleiras = Convert.ToDouble(jsonEstante.PesoMaximoPrat.Replace(',', '.'), CultureInfo.GetCultureInfo("en-US"));
+            estante.UsuarioId = null;
+            estante.Ativo = true;
+
+            core.Alterar(estante);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeletarEstante(int EstanteId)
+        {
+            var core = new EstanteCore();
+
+            var estante = core.RetornarPorId(EstanteId);
+
+            estante.Ativo = false;
+
+            core.Alterar(estante);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
     }
 }

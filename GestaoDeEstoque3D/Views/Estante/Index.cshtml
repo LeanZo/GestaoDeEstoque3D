@@ -15,6 +15,9 @@
 
 <h3>Cadastro de Estante</h3>
 
+<label id="estante-codigo-label" style="display:none">Código da Estante:</label>
+<input type="text" id="estante-codigo" disabled style="display:none">
+<br>
 <label>Quantidade de Prateleiras:</label>
 <input type="text" id="estante-quantidade-prateleiras">
 <br>
@@ -31,7 +34,9 @@
 <input type="text" id="estante-peso-maximo-prateleiras">
 <br>
 <br>
-<button onclick="CadastrarEstante()">Adicionar Estante</button>
+<button id="button-adicionar-estante" onclick="CadastrarEstante()">Adicionar Estante</button>
+<button id="button-editar-estante" onclick="EditarEstante()" style="display:none">Editar Estante</button>
+<button id="button-cancelar" onclick="CancelarEdicao()" style="display:none">Cancelar</button>
 <br>
 <br>
 

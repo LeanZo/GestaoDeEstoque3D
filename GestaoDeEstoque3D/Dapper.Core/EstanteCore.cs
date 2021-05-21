@@ -23,6 +23,20 @@ namespace GestaoDeEstoque3D.Dapper.Core
             return Estante;
         }
 
+        public List<Estante> RetornarEstantesAssociadas()
+        {
+            List<Estante> Estante;
+            using (var connection = DapperConnection.Create())
+            {
+                Estante = connection.Query<Estante>(
+                    @"select * from tbl_estante est
+                      where est_ativo is true and est_pol_id is not null"
+                ).ToList();
+            }
+
+            return Estante;
+        }
+
         public override Estante RetornarPorId(int id)
         {
             Estante Estante;

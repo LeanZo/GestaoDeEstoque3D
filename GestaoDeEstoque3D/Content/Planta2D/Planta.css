@@ -7,3 +7,30 @@
     width: 100%;
     height: 100%;
 }
+
+.label-planta {
+    background: none;
+    border: none;
+    box-shadow: none;
+
+}
+
+/*.leaflet-tooltip-left.label-planta::before {
+    border-left-color: brown;
+}
+
+.leaflet-tooltip-right.label-planta::before {
+    border-right-color: mediumpurple;
+}*/
+
+
+.leaflet-label {
+    width: 100px;
+    line-height: 12px;
+    text-align: center;
+}
+
+    .leaflet-label .pct {
+        font-size: 20px;
+        font-weight: 600;
+    }

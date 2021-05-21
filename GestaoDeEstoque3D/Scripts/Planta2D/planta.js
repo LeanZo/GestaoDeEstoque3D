@@ -3,6 +3,7 @@ var camadas = [];
 var layerControl;
 var desenhandoPoligono = false;
 var poligonoSelecionado;
+var estantesAssociadas;
 
 InicializarPlanta();
 
@@ -53,7 +54,11 @@ function CarregarCamadas() {
         type: 'POST',
         url: 'Planta2D/CarregarCamadas',
         success: function (response) {
-            for (var camada of response) {
+            estantesAssociadas = response.estantesAssociadas;
+
+            var camadasGeojson = response.camadasGeojson;
+
+            for (var camada of camadasGeojson) {
                 camadas[camada.CamadaNome] = {
                     leafletLayer: null,
                     geojson: JSON.parse(camada.CamadaGeojson),
@@ -108,6 +113,17 @@ function onEachFeature(feature, layer) {
     layer.on('pm:remove', function (event) {
         DeletarPoligono(event.layer);
     });
+
+    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
+    
+    if (estanteAssociada != null) {
+        layer.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Níveis: ' + estanteAssociada.QuantidadePrateleiras, {
+            permanent: true,
+            opacity: 1,
+            className: 'label-planta',
+            direction: 'center'
+        });
+    }
 
     //var tooltip = '';
 
