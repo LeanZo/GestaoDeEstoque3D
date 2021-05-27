@@ -8,14 +8,13 @@ using System.Web;
 
 namespace GestaoDeEstoque3D.Dapper.Model
 {
-    [Table("tbl_camada")]
-    public class Camada : IClasseBase
+    [Table("tbl_armazem")]
+    public class Armazem : IClasseBase
     {
-        public IEntityMap Mappings { get; set; } = new CamadaMap();
+        public IEntityMap Mappings { get; set; } = new ArmazemMap();
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Cor { get; set; }
+        public int? PoligonoId { get; set; }
         public bool Ativo { get; set; }
-        public int? ArmazemId { get; set; }
     }
 }

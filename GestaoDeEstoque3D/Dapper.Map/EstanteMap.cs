@@ -37,6 +37,9 @@ namespace GestaoDeEstoque3D.Dapper.Map
 
             Map(p => p.Ativo)
                 .ToColumn("est_ativo");
+
+            Map(p => p.ArmazemId)
+                .ToColumn("est_arm_id");
         }
     }
 }

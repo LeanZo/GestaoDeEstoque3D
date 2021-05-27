@@ -97,5 +97,42 @@ namespace GestaoDeEstoque3D.Controllers
 
             new PoligonoCore().Alterar(poligono);
         }
+
+        [HttpPost]
+        public JsonResult AdicionarReferenciaEstante(int PoligonoId, int EstanteId)
+        {
+            var estante = new EstanteCore().RetornarPorId(EstanteId);
+            var poligono = new PoligonoCore().RetornarPorId(PoligonoId);
+
+            dynamic response = null;
+
+            if (estante.ArmazemId == poligono.Camada.ArmazemId)
+            {
+                estante.PoligonoId = PoligonoId;
+
+                new EstanteCore().Alterar(estante);
+
+                response = new
+                {
+                    Id = EstanteId,
+                    PoligonoId = PoligonoId,
+                    QuantidadePrateleiras = estante.QuantidadePrateleiras
+                };
+            }
+
+            var return_json = Json(response, JsonRequestBehavior.AllowGet);
+            return_json.MaxJsonLength = int.MaxValue;
+            return return_json;
+        }
+
+        [HttpPost]
+        public void RemoverReferenciaEstante(int EstanteId)
+        {
+            var estante = new EstanteCore().RetornarPorId(EstanteId);
+
+            estante.PoligonoId = null;
+
+            new EstanteCore().Alterar(estante);
+        }
     }
 }

@@ -38,10 +38,18 @@ namespace GestaoDeEstoque3D.Dapper.Core
             List<Poligono> Poligonos;
             using (var connection = DapperConnection.Create())
             {
-                Poligonos = connection.Query<Poligono>(
+                Poligonos = connection.Query<Poligono, Camada, Poligono>(
                     @"select * from tbl_poligono pol
+                      inner join tbl_camada cam on cam_id = pol_cam_id
                       where pol_cam_id = @CamadaId and pol_ativo is true",
-                    param: new { CamadaId }
+                    (POL, CAM) =>
+                    {
+                        POL.Camada = CAM;
+
+                        return POL;
+                    },
+                    param: new { CamadaId },
+                    splitOn: "pol_id, cam_id"
                 ).ToList();
             }
 
@@ -53,11 +61,19 @@ namespace GestaoDeEstoque3D.Dapper.Core
             Poligono Poligono;
             using (var connection = DapperConnection.Create())
             {
-                Poligono = connection.Query<Poligono>(
+                Poligono = connection.Query<Poligono, Camada, Poligono>(
                     @"select * from tbl_poligono pol
+                      inner join tbl_camada cam on cam_id = pol_cam_id
                       where pol_id = @id
                       limit 1",
-                    param: new { id }
+                    (POL, CAM) =>
+                    {
+                        POL.Camada = CAM;
+
+                        return POL;
+                    },
+                    param: new { id },
+                    splitOn: "pol_id, cam_id"
                 ).FirstOrDefault();
             }
 

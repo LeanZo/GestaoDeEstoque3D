@@ -99,7 +99,19 @@ function AdicionarCamadas() {
 
 function onEachFeature(feature, layer) {
     layer.on('click', function (e) {
+        poligonoSelecionado = layer;
+
         console.log(e.target.feature.properties);
+
+        if (poligonoSelecionado.feature.properties.CamadaNome == "Estantes") {
+            var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
+
+            if (estanteAssociada == null) {
+                layer.bindPopup('<button onclick="AbrirModalAdicionarReferencia()">Adicionar referência</button>').openPopup().unbindPopup();
+            } else {
+                layer.bindPopup('<button onclick="RemoverReferenciaEstante()">Remover referência</button>').openPopup().unbindPopup();
+            }
+        }
     });
 
     layer.on('pm:update', function (event) {
@@ -124,25 +136,6 @@ function onEachFeature(feature, layer) {
             direction: 'center'
         });
     }
-
-    //var tooltip = '';
-
-    //if (layer.feature.properties.LAB_AREA != null)
-    //    tooltip += "<br>Área: " + layer.feature.properties.LAB_AREA;
-
-    //try {
-    //    var propriedadesToolip = listaLayersJsonBruto[layer.feature.properties.LayerNome].props.propriedadesTooltip;
-    //    for (var i in propriedadesToolip) {
-    //        if (layer.feature.properties[propriedadesToolip[i]] != null)
-    //            tooltip += "<br>" + propriedadesToolip[i] + ": " + layer.feature.properties[propriedadesToolip[i]];
-    //    }
-    //} catch (ex) {
-    //    //fazer nada
-    //}
-
-    //tooltip = tooltip.replace('<br>', '');
-    //if (tooltip != '')
-    //    layer.bindTooltip(tooltip);
 }
 
 function PrepararPoligonoParaSalvar(poligono) {
@@ -229,4 +222,70 @@ function DeletarPoligono(poligono) {
             console.log("Erro.");
         }
     });
+}
+
+function AbrirModalAdicionarReferencia(poligono) {
+    var modal = document.getElementById("ModalAdicionarReferencia");
+    var codigo_estante_input = $('#codigo-estante-input');
+    var btn = document.getElementById('btnAdicionarReferencia');
+
+    codigo_estante_input.val('');
+
+    btn.onclick = function () {
+        modal.style.display = "none";
+
+        AdicionarReferenciaEstante(poligonoSelecionado, codigo_estante_input.val());
+    }
+
+    modal.style.display = "flex";
+}
+
+function AdicionarReferenciaEstante(poligono, estanteId) {
+    var parametrosAjax = { PoligonoId: poligono.feature.properties.PoligonoId, EstanteId: estanteId };
+    $.ajax({
+        type: "POST",
+        url: "/Planta2D/AdicionarReferenciaEstante",
+        data: parametrosAjax,
+        success: function (result) {
+            estantesAssociadas.push(result);
+
+            var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligono.feature.properties.PoligonoId);
+
+            if (estanteAssociada != null) {
+                poligono.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Níveis: ' + estanteAssociada.QuantidadePrateleiras, {
+                    permanent: true,
+                    opacity: 1,
+                    className: 'label-planta',
+                    direction: 'center'
+                });
+            }
+
+            planta.closePopup();
+        },
+        error: function (req, status, error) {
+            console.log("Erro.");
+        }
+    });
+}
+
+function RemoverReferenciaEstante() {
+    var poligono = poligonoSelecionado;
+    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligono.feature.properties.PoligonoId);
+
+    if (estanteAssociada != null) {
+        var parametrosAjax = { EstanteId: estanteAssociada.Id };
+        $.ajax({
+            type: "POST",
+            url: "/Planta2D/RemoverReferenciaEstante",
+            data: parametrosAjax,
+            success: function () {
+                estantesAssociadas = estantesAssociadas.filter(estante => estante.Id !== estanteAssociada.Id)
+                poligono.unbindTooltip();
+                planta.closePopup();
+            },
+            error: function (req, status, error) {
+                console.log("Erro.");
+            }
+        });
+    }
 }

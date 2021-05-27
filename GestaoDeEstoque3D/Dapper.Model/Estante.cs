@@ -21,5 +21,6 @@ namespace GestaoDeEstoque3D.Dapper.Model
         public int? PoligonoId { get; set; }
         public int? UsuarioId { get; set; }
         public bool Ativo { get; set; }
+        public int? ArmazemId { get; set; }
     }
 }
