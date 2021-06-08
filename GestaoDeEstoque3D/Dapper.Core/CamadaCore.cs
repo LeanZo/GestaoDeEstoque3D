@@ -24,6 +24,22 @@ namespace GestaoDeEstoque3D.Dapper.Core
             return Camada;
         }
 
+        public Camada RetornarPorCamadaNomeArmazemId(string CamadaNome, int ArmazemId)
+        {
+            Camada Camada;
+            using (var connection = DapperConnection.Create())
+            {
+                Camada = connection.Query<Camada>(
+                    @"select * from tbl_camada cam
+                      where cam_nome = @CamadaNome and cam_arm_id = @ArmazemId
+                      limit 1",
+                    param: new { CamadaNome, ArmazemId }
+                ).FirstOrDefault();
+            }
+
+            return Camada;
+        }
+
         public override Camada RetornarPorId(int id)
         {
             Camada Camada;

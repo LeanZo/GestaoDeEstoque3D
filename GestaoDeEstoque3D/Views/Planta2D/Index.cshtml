@@ -7,13 +7,16 @@
 }
 
 <head>
+    <link type="text/css" rel="stylesheet" href="~/Libraries/tabulator/tabulator.min.css?v=@ViewBag.Versao">
+
     <link type="text/css" rel="stylesheet" href="~/Libraries/leaflet/leaflet.css?v=@ViewBag.Versao">
     <link type="text/css" rel="stylesheet" href="~/Libraries/leaflet-geoman/leaflet-geoman.css?v=@ViewBag.Versao">
 
     <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/Planta.css?v=@ViewBag.Versao">
-</head>
+    <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/toolbar.css?v=@ViewBag.Versao">
 
-<h2>Planta 2D - Gestão de Estoque 3D</h2>
+    <script src="https://kit.fontawesome.com/083c25095f.js" crossorigin="anonymous"></script>
+</head>
 
 <div class="planta-container">
     <div id="planta"></div>
@@ -43,8 +46,24 @@
     </div>
 </div>
 
+<div id="ModalAdicionarEstante" class="modal-template-container">
+    <div class="modal-template-inner-container" style="box-shadow: 0px 0px 20px 2px black;padding: 5px 15px;">
+        <div class="modal-template-header">
+            <h2 class="modal-h2">Adicionar Estantes</h2>
+        </div>
+        <div class="modal-template-body">
+            <div id="tabela-adicionar-estante"></div>
+            <button type="button" class="button-template" id="btnAdicionarEstante">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/Libraries/tabulator/tabulator.min.js?v=@ViewBag.Versao"></script>
+
 <script src="~/Libraries/leaflet/leaflet.js?v=@ViewBag.Versao"></script>
 <script src="~/Libraries/leaflet-geoman/leaflet-geoman.min.js?v=@ViewBag.Versao"></script>
 <script src="~/Libraries/leaflet-label/leaflet.label.js?v=@ViewBag.Versao"></script>
 
+<script src="~/Scripts/Planta2D.Controls/toolbar.js?v=@ViewBag.Versao"></script>
+<script src="~/Scripts/Planta2D.Controls/adicionar-estante.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D/planta.js?v=@ViewBag.Versao"></script>

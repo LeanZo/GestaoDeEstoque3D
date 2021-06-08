@@ -186,11 +186,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CamadaGeojsonVM.cs" />
+    <Compile Include="Models\PoligonoGeojson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Imagens\exemplo-planta.png" />
     <Content Include="Content\Planta2D\Planta.css" />
+    <Content Include="Content\Planta2D\toolbar.css" />
     <Content Include="Content\Shared\Layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -213,6 +215,8 @@
     <Content Include="Libraries\tabulator\tabulator.min.css" />
     <Content Include="Libraries\tabulator\tabulator.min.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
+    <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />
+    <Content Include="Scripts\Planta2D.Controls\toolbar.js" />
     <Content Include="Scripts\Planta2D\planta.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

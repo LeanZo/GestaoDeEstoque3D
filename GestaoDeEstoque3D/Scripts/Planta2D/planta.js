@@ -4,6 +4,8 @@ var layerControl;
 var desenhandoPoligono = false;
 var poligonoSelecionado;
 var estantesAssociadas;
+var dragStartId = 1;
+var dragEndId = 0;
 
 InicializarPlanta();
 
@@ -23,8 +25,20 @@ function InicializarPlanta() {
     planta.pm.addControls({
         position: 'topleft',
         drawMarker: false,
+        drawCircleMarker: false,
+        drawPolyline: false,
+        drawRectangle: false,
+        drawPolygon: false,
+        drawCircle: false,
+        editMode: false,
         cutPolygon: false
     }); 
+
+    var containers = [];
+
+    containers.push(CriarControlAdicionarEstante());
+
+    CriarToolbar(containers);
 
     planta.on('pm:drawend', function (e) {
         desenhandoPoligono = false;
@@ -49,7 +63,18 @@ function InicializarPlanta() {
     CarregarCamadas();
 }
 
+function LimparPlanta() {
+    for (var camada in camadas) {
+        planta.removeLayer(camadas[camada].leafletLayer);
+        layerControl.removeLayer(camadas[camada].leafletLayer);
+    }
+
+    camadas = [];
+}
+
 function CarregarCamadas() {
+    LimparPlanta();
+
     $.ajax({
         type: 'POST',
         url: 'Planta2D/CarregarCamadas',
@@ -103,23 +128,28 @@ function onEachFeature(feature, layer) {
 
         console.log(e.target.feature.properties);
 
-        if (poligonoSelecionado.feature.properties.CamadaNome == "Estantes") {
-            var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
+        //if (poligonoSelecionado.feature.properties.CamadaNome == "Estantes") {
+        //    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
 
-            if (estanteAssociada == null) {
-                layer.bindPopup('<button onclick="AbrirModalAdicionarReferencia()">Adicionar referência</button>').openPopup().unbindPopup();
-            } else {
-                layer.bindPopup('<button onclick="RemoverReferenciaEstante()">Remover referência</button>').openPopup().unbindPopup();
-            }
-        }
+        //    if (estanteAssociada == null) {
+        //        layer.bindPopup('<button onclick="AbrirModalAdicionarReferencia()">Adicionar referência</button>').openPopup().unbindPopup();
+        //    } else {
+        //        layer.bindPopup('<button onclick="RemoverReferenciaEstante()">Remover referência</button>').openPopup().unbindPopup();
+        //    }
+        //}
     });
 
     layer.on('pm:update', function (event) {
         SalvarPoligono(event.layer, event.layer.feature.properties.CamadaId, event.layer.feature.properties.CamadaNome);
     });
 
+    layer.on('pm:dragstart', function (event) {
+        layer.toggleTooltip();
+    });
+
     layer.on('pm:dragend', function (event) {
         SalvarPoligono(event.layer, event.layer.feature.properties.CamadaId, event.layer.feature.properties.CamadaNome);
+        layer.toggleTooltip();
     });
 
     layer.on('pm:remove', function (event) {
@@ -182,9 +212,11 @@ function AbrirModalNovoPoligono(poligono) {
 }
 
 function SalvarPoligono(poligono, camadaId, camadaNome) {
-    camadas[camadaNome].leafletLayer.addLayer(poligono);
-    poligono.options.onEachFeature = onEachFeature;
-    onEachFeature(poligono.feature, poligono);
+    if (poligono.feature.properties.PoligonoId == -1) {
+        camadas[camadaNome].leafletLayer.addLayer(poligono);
+        poligono.options.onEachFeature = onEachFeature;
+        onEachFeature(poligono.feature, poligono);
+    }
 
     try {
         poligono.bringToFront();

@@ -57,7 +57,7 @@ namespace GestaoDeEstoque3D.Controllers
         }
 
         [HttpPost]
-        public int SalvarPoligono(int PoligonoId, int CamadaId, string Geojson)
+        public int SalvarPoligono(int PoligonoId, int CamadaId, string Geojson, bool Ativo = true)
         {
             if(PoligonoId == -1)
             {
@@ -65,7 +65,7 @@ namespace GestaoDeEstoque3D.Controllers
                 {
                     CamadaId = CamadaId,
                     Geojson = Geojson,
-                    Ativo = true
+                    Ativo = Ativo
                 };
 
                 new PoligonoCore().Inserir(poligono);

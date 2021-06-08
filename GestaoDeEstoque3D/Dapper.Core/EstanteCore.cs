@@ -9,14 +9,31 @@ namespace GestaoDeEstoque3D.Dapper.Core
 {
     public class EstanteCore : TabelaBaseCore<Estante>
     {
-        public List<Estante> RetornarTodos()
+        public List<Estante> RetornarTodos(int ArmazemId = 1)
         {
             List<Estante> Estante;
             using (var connection = DapperConnection.Create())
             {
                 Estante = connection.Query<Estante>(
                     @"select * from tbl_estante est
-                      where est_ativo is true"
+                      where est_ativo is true and est_arm_id = @ArmazemId",
+                    new { ArmazemId }
+                ).ToList();
+            }
+
+            return Estante;
+        }
+
+        public List<Estante> RetornarEstantesNaoPresentesNoMapa(int ArmazemId = 1)
+        {
+            List<Estante> Estante;
+            using (var connection = DapperConnection.Create())
+            {
+                Estante = connection.Query<Estante>(
+                    @"select * from tbl_estante est
+                      inner join tbl_poligono pol on est_pol_id = pol_id and pol_ativo is false
+                      where est_ativo is true and est_arm_id = @ArmazemId",
+                    new { ArmazemId }
                 ).ToList();
             }
 
