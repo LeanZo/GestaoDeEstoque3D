@@ -160,10 +160,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\TipoItemEstoqueController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\EstanteController.cs" />
     <Compile Include="Controllers\Planta2DController.cs" />
     <Compile Include="Dapper.Core\ArmazemCore.cs" />
+    <Compile Include="Dapper.Core\ItemEstoqueCore.cs" />
+    <Compile Include="Dapper.Core\TipoItemEstoqueCore.cs" />
     <Compile Include="Dapper.Core\EstanteCore.cs" />
     <Compile Include="Dapper.Core\PoligonoCore.cs" />
     <Compile Include="Dapper.Core\DapperConnection.cs" />
@@ -171,12 +174,16 @@
     <Compile Include="Dapper.Core\TabelaBaseCore.cs" />
     <Compile Include="Dapper.Core\SistemaConfiguracaoCore.cs" />
     <Compile Include="Dapper.Map\ArmazemMap.cs" />
+    <Compile Include="Dapper.Map\ItemEstoqueMap.cs" />
+    <Compile Include="Dapper.Map\TipoItemEstoqueMap.cs" />
     <Compile Include="Dapper.Map\EstanteMap.cs" />
     <Compile Include="Dapper.Map\PoligonoMap.cs" />
     <Compile Include="Dapper.Map\RegisterMappings.cs" />
     <Compile Include="Dapper.Map\CamadaMap.cs" />
     <Compile Include="Dapper.Map\SistemaConfiguracaoMap.cs" />
     <Compile Include="Dapper.Model\Armazem.cs" />
+    <Compile Include="Dapper.Model\ItemEstoque.cs" />
+    <Compile Include="Dapper.Model\TipoItemEstoque.cs" />
     <Compile Include="Dapper.Model\Estante.cs" />
     <Compile Include="Dapper.Model\Poligono.cs" />
     <Compile Include="Dapper.Model\IClasseBase.cs" />
@@ -214,6 +221,7 @@
     <Content Include="Libraries\jquery-validate\jquery.validate.unobtrusive.min.js" />
     <Content Include="Libraries\tabulator\tabulator.min.css" />
     <Content Include="Libraries\tabulator\tabulator.min.js" />
+    <Content Include="Scripts\TipoItemEstoque\cadastro.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
     <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />
     <Content Include="Scripts\Planta2D.Controls\toolbar.js" />
@@ -232,6 +240,7 @@
     <Content Include="Views\Inicio\Index.cshtml" />
     <Content Include="Views\Planta2D\Index.cshtml" />
     <Content Include="Views\Estante\Index.cshtml" />
+    <Content Include="Views\TipoItemEstoque\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

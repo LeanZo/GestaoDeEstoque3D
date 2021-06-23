@@ -19,6 +19,8 @@ namespace GestaoDeEstoque3D.Dapper.Map
                 config.AddMap(new EstanteMap());
                 config.AddMap(new PoligonoMap());
                 config.AddMap(new SistemaConfiguracaoMap());
+                config.AddMap(new TipoItemEstoqueMap());
+                config.AddMap(new ItemEstoqueMap());
             });
         }
     }
