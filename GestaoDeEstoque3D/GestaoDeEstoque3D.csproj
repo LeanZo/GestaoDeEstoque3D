@@ -221,6 +221,7 @@
     <Content Include="Libraries\jquery-validate\jquery.validate.unobtrusive.min.js" />
     <Content Include="Libraries\tabulator\tabulator.min.css" />
     <Content Include="Libraries\tabulator\tabulator.min.js" />
+    <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
     <Content Include="Scripts\TipoItemEstoque\cadastro.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
     <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />

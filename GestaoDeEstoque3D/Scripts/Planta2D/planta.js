@@ -37,6 +37,7 @@ function InicializarPlanta() {
     var containers = [];
 
     containers.push(CriarControlAdicionarEstante());
+    containers.push(CriarControlItensDeEstoque());
 
     CriarToolbar(containers);
 
