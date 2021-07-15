@@ -13,6 +13,7 @@
     <link type="text/css" rel="stylesheet" href="~/Libraries/leaflet-geoman/leaflet-geoman.css?v=@ViewBag.Versao">
 
     <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/Planta.css?v=@ViewBag.Versao">
+    <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/View3D.css?v=@ViewBag.Versao">
     <link type="text/css" rel="stylesheet" href="~/Content/Planta2D/toolbar.css?v=@ViewBag.Versao">
 
     <script src="https://kit.fontawesome.com/083c25095f.js" crossorigin="anonymous"></script>
@@ -20,6 +21,10 @@
 
 <div class="planta-container">
     <div id="planta"></div>
+</div>
+
+<div class="view-3d-container">
+    <div id="view-3d"></div>
 </div>
 
 <div id="ModalNovoPoligono" class="modal-template-container">
@@ -78,8 +83,11 @@
 <script src="~/Libraries/leaflet/leaflet.js?v=@ViewBag.Versao"></script>
 <script src="~/Libraries/leaflet-geoman/leaflet-geoman.min.js?v=@ViewBag.Versao"></script>
 <script src="~/Libraries/leaflet-label/leaflet.label.js?v=@ViewBag.Versao"></script>
+<script src="~/Libraries/three/three-min.js?v=@ViewBag.Versao"></script>
+<script src="~/Libraries/orbit-controls/orbit-controls.js?v=@ViewBag.Versao"></script>
 
 <script src="~/Scripts/Planta2D.Controls/toolbar.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D.Controls/adicionar-estante.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D.Controls/itens-de-estoque.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D/planta.js?v=@ViewBag.Versao"></script>
+<script src="~/Scripts/View3D/View3D.js?v=@ViewBag.Versao"></script>

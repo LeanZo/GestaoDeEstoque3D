@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CromulentBisgetti.ContainerPacking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\3DContainerPacking\CromulentBisgetti.ContainerPacking.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.90\lib\net461\Dapper.dll</HintPath>
     </Reference>
@@ -198,14 +202,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Imagens\exemplo-planta.png" />
+    <Content Include="Content\Planta2D\View3D.css" />
     <Content Include="Content\Planta2D\Planta.css" />
     <Content Include="Content\Planta2D\toolbar.css" />
     <Content Include="Content\Shared\Layout.css" />
+    <Content Include="DLLs\3DContainerPacking\CromulentBisgetti.ContainerPacking.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <None Include="Libraries\jquery-validate\jquery.validate-vsdoc.js" />
     <Content Include="Libraries\jquery\jquery-3.6.0.min.js" />
+    <Content Include="Libraries\ko\ko-mapping.js" />
+    <Content Include="Libraries\ko\ko.js" />
     <Content Include="Libraries\leaflet-geoman\leaflet-geoman.css" />
     <Content Include="Libraries\leaflet-geoman\leaflet-geoman.min.js" />
     <Content Include="Libraries\leaflet\images\layers-2x.png" />
@@ -219,14 +227,18 @@
     <Content Include="Libraries\jquery-validate\jquery.validate.min.js" />
     <Content Include="Libraries\jquery-validate\jquery.validate.unobtrusive.js" />
     <Content Include="Libraries\jquery-validate\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Libraries\orbit-controls\orbit-controls.js" />
     <Content Include="Libraries\tabulator\tabulator.min.css" />
     <Content Include="Libraries\tabulator\tabulator.min.js" />
+    <Content Include="Libraries\three\three-min.js" />
+    <Content Include="Scripts\ContainerPacking\container-packing.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
     <Content Include="Scripts\TipoItemEstoque\cadastro.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
     <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />
     <Content Include="Scripts\Planta2D.Controls\toolbar.js" />
     <Content Include="Scripts\Planta2D\planta.js" />
+    <Content Include="Scripts\View3D\View3D.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

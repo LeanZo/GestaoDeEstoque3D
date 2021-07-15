@@ -6,6 +6,14 @@
     ViewBag.Versao = new SistemaConfiguracaoCore().RetornarPorNome("versao").Valor;
 }
 
+<head>
+    <script src="~/Libraries/ko/ko.js"></script>
+    <script src="~/Libraries/ko/ko-mapping.js"></script>
+    <script src="~/Libraries/three/three-min.js"></script>
+    <script src="~/Libraries/orbit-controls/orbit-controls.js"></script>
+    <script src="~/Scripts/ContainerPacking/container-packing.js"></script>
+</head>
+
 <h2>Início - Gestão de Estoque 3D</h2>
 
 <a href="/TipoItemEstoque">Tipos de Item de Estoque</a>
@@ -13,3 +21,7 @@
 <a href="/Estante">Estantes</a>
 <br>
 <a href="/Planta2D">Planta 2D</a>
+
+<div id="drawing-container"></div>
+<button onclick="viewModel.UnpackItemInRender()"><</button>
+<button onclick="viewModel.PackItemInRender()">></button>

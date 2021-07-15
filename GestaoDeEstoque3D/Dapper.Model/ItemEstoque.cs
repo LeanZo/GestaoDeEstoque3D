@@ -14,7 +14,10 @@ namespace GestaoDeEstoque3D.Dapper.Model
         public IEntityMap Mappings { get; set; } = new ItemEstoqueMap();
         public int Id { get; set; }
         public int? UsuarioId { get; set; }
+        public int? TipoItemEstoqueId { get; set; }
         public DateTime DataHora { get; set; }
         public bool Ativo { get; set; }
+
+        public TipoItemEstoque TipoItemEstoque { get; set; }
     }
 }

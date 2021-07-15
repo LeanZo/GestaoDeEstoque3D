@@ -129,6 +129,18 @@ function onEachFeature(feature, layer) {
 
         console.log(e.target.feature.properties);
 
+        view3D.UnpackAllItemsInRender();
+
+        var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == e.target.feature.properties.PoligonoId);
+        if (estanteAssociada != null) {
+            var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == estanteAssociada.Id);
+
+            if (containerPackingResult != null) {
+                view3D.ShowPackingView(containerPackingResult);
+                view3D.PackAllItemsInRender();
+            }
+        }
+
         //if (poligonoSelecionado.feature.properties.CamadaNome == "Estantes") {
         //    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
 

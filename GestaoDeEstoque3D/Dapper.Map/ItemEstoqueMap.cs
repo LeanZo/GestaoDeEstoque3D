@@ -21,7 +21,10 @@ namespace GestaoDeEstoque3D.Dapper.Map
                 .ToColumn("ite_data_hora");
 
             Map(p => p.Ativo)
-                .ToColumn("tie_ativo");
+                .ToColumn("ite_ativo");
+
+            Map(p => p.TipoItemEstoqueId)
+                .ToColumn("ite_tie_id");
         }
     }
 }
