@@ -31,6 +31,29 @@ namespace GestaoDeEstoque3D.Dapper.Core
             return ItemEstoque;
         }
 
+        public List<ItemEstoque> RetornarPorEstanteId(int estanteId)
+        {
+            var ItemsEstoque = new List<ItemEstoque>();
+            using (var connection = DapperConnection.Create())
+            {
+                ItemsEstoque = connection.Query<ItemEstoque, TipoItemEstoque, ItemEstoque>(
+                    @"select * from tbl_item_estoque ite
+                      inner join tbl_tipo_item_estoque tie on tie_id = ite_tie_id
+                      where ite_est_id = @estanteId",
+                    (ITE, TIE) =>
+                    {
+                        ITE.TipoItemEstoque = TIE;
+
+                        return ITE;
+                    },
+                    param: new { estanteId },
+                    splitOn: "ite_id, tie_id"
+                ).ToList();
+            }
+
+            return ItemsEstoque;
+        }
+
         public override ItemEstoque RetornarPorId(int id)
         {
             ItemEstoque ItemEstoque;

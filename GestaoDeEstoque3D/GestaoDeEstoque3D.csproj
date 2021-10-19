@@ -59,6 +59,9 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Npgsql, Version=5.0.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.5.0.5\lib\netstandard2.0\Npgsql.dll</HintPath>
     </Reference>
@@ -142,9 +145,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -232,7 +232,9 @@
     <Content Include="Libraries\tabulator\tabulator.min.js" />
     <Content Include="Libraries\three\three-min.js" />
     <Content Include="Scripts\ContainerPacking\container-packing.js" />
+    <Content Include="Scripts\ContainerPacking\online-packing-test.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
+    <Content Include="Scripts\Planta2D\ItensDeEstoque.js" />
     <Content Include="Scripts\TipoItemEstoque\cadastro.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
     <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />
@@ -264,6 +266,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Nerv\Downloads\3DContainerPacking\3DContainerPacking-master\src\LeanContainerPacking\OnlineContainerPacking.csproj">
+      <Project>{6b818553-e094-4bda-8687-b6e5c5b7441a}</Project>
+      <Name>OnlineContainerPacking</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

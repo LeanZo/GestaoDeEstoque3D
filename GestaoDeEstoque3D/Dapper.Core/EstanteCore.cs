@@ -3,6 +3,7 @@ using GestaoDeEstoque3D.Dapper.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace GestaoDeEstoque3D.Dapper.Core
@@ -20,6 +21,27 @@ namespace GestaoDeEstoque3D.Dapper.Core
                     new { ArmazemId }
                 ).ToList();
             }
+
+            return Estante;
+        }
+
+        public List<Estante> RetornarTodosComItens(int ArmazemId = 1)
+        {
+            List<Estante> Estante;
+            using (var connection = DapperConnection.Create())
+            {
+                Estante = connection.Query<Estante>(
+                    @"select * from tbl_estante est
+                      where est_ativo is true and est_arm_id = @ArmazemId",
+                    new { ArmazemId }
+                ).ToList();
+            }
+
+            var itemEstoqueCore = new ItemEstoqueCore();
+            Parallel.ForEach(Estante, estante =>
+            {
+                estante.ItemsEstoque = itemEstoqueCore.RetornarPorEstanteId(estante.Id);
+            });
 
             return Estante;
         }

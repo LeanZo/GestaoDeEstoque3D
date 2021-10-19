@@ -115,16 +115,16 @@ class View3D {
 	}
 
 	PackAllItemsInRender() {
-		while (LastItemRenderedIndex < ContainerAtual.AlgorithmPackingResults[0].PackedItems.length - 1) {
+		while (LastItemRenderedIndex < ContainerAtual.PackedItems.length - 1) {
 			this.PackItemInRender();
         }
     }
 
 	PackItemInRender () {
-		if (LastItemRenderedIndex < ContainerAtual.AlgorithmPackingResults[0].PackedItems.length - 1) {
+		if (LastItemRenderedIndex < ContainerAtual.PackedItems.length - 1) {
 			LastItemRenderedIndex++;
 
-			var PackedItems = ContainerAtual.AlgorithmPackingResults[0].PackedItems;
+			var PackedItems = ContainerAtual.PackedItems;
 
 			var itemOriginOffset = {
 				x: PackedItems[LastItemRenderedIndex].PackDimX / 2,

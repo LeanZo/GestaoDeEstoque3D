@@ -17,6 +17,11 @@ namespace GestaoDeEstoque3D.Dapper.Model
         public int? TipoItemEstoqueId { get; set; }
         public DateTime DataHora { get; set; }
         public bool Ativo { get; set; }
+        public double PackX { get; set; }
+        public double PackY { get; set; }
+        public double PackZ { get; set; }
+        public int? EstanteId { get; set; }
+        public int? ItemBaseId { get; set; }
 
         public TipoItemEstoque TipoItemEstoque { get; set; }
     }
