@@ -1,6 +1,6 @@
 ﻿let AcoesRowItensDeEstoque = function (cell, formatterParams, onRendered) {
     //return '<div style="display: flex"><div style="color: #219BB8;" onclick="AdicionarEstanteAoMapa(' + cell.getData().Id + ')">Adicionar</div></div>';
-    return '<div style="display: flex"><div style="color: #219BB8;" onclick="PrepararEditar(' + cell.getData().Id + ')">Editar</div>&nbsp|&nbsp<div style="color: #C73228;" onclick="Deletar(' + cell.getData().Id + ')">Excluir</div></div>';
+    return '<div style="display: flex"><div style="color: #219BB8;" onclick="ItensDeEstoque.Estocar(' + cell.getData().Id + ')">Estocar</div></div>';
 };
 
 var tabelaItensDeEstoque = new Tabulator("#tabela-modal-itens-de-estoque", {
@@ -41,4 +41,31 @@ class ItensDeEstoque {
         $('#ModaItensDeEstoque').css('display', 'flex');
     }
 
+    static Estocar(TipoItemEstoqueId) {
+        $.ajax({
+            type: "POST",
+            url: "/ControleDeEstoque/EstocarNovoItem",
+            data: { TipoItemEstoqueId: TipoItemEstoqueId },
+            success: async function (result) {
+                if (result.NovoItemId != -1) {
+                    await PackContainers();
+
+                    view3D.UnpackAllItemsInRender();
+
+                    var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == result.EstanteId);
+
+                    if (containerPackingResult != null) {
+                        view3D.ShowPackingView(containerPackingResult, result.NovoItemId);
+                        view3D.PackAllItemsInRender();
+                    }
+
+                    $('#ModaItensDeEstoque').css('display', 'none');
+                    $('#ModalItensDeEstoque').css('display', 'none');
+                }
+            },
+            error: function (req, status, error) {
+                console.log("Erro.");
+            }
+        });
+    }
 }

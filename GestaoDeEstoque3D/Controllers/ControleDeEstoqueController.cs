@@ -1,6 +1,4 @@
-﻿using CromulentBisgetti.ContainerPacking;
-using CromulentBisgetti.ContainerPacking.Entities;
-using GestaoDeEstoque3D.Dapper.Core;
+﻿using GestaoDeEstoque3D.Dapper.Core;
 using GestaoDeEstoque3D.Dapper.Model;
 using System;
 using System.Collections.Generic;
@@ -11,50 +9,12 @@ using System.Web.Mvc;
 
 namespace GestaoDeEstoque3D.Controllers
 {
-    public class InicioController : Controller
+    public class ControleDeEstoqueController : Controller
     {
-        // GET: Inicio
-        public ActionResult Index()
+        // GET: ControleDeEstoque
+        public JsonResult EstocarNovoItem(int TipoItemEstoqueId)
         {
-            return View();
-        }
-
-        public JsonResult ContainerPacking()
-        {
-            var estantes = new EstanteCore().RetornarTodosComItens();
-
-            var PackResult = estantes.Select(e => new
-            {
-                ContainerID = e.Id,
-                PackedItems = e.ItemsEstoque.Select(i => new {
-                    ItemId = i.Id,
-                    PackDimX = i.TipoItemEstoque.Largura,
-                    PackDimY = i.TipoItemEstoque.Altura,
-                    PackDimZ = i.TipoItemEstoque.Profundidade,
-                    CoordX = i.PackX,
-                    CoordY = i.PackY,
-                    CoordZ = i.PackZ
-                })
-            });
-
-            var Containers = estantes.Select(e => new {
-                ID = e.Id,
-                Length = e.ProfundidadePrateleiras,
-                Width = e.LarguraPrateleiras,
-                Height = e.AlturaPrateleiras
-            });
-
-            var response = new
-            {
-                PackResult,
-                Containers
-            };
-
-            return Json(response);
-        }
-
-        public JsonResult AssociarUmTeste()
-        {
+            //===Carrega containers/estantes=====================
             var estanteCore = new EstanteCore();
             var itemEstoqueCore = new ItemEstoqueCore();
             var estantes = estanteCore.RetornarTodosComItens();
@@ -83,42 +43,45 @@ namespace GestaoDeEstoque3D.Controllers
 
                 containers.Add(new OnlineContainerPacking.Models.Container(estante.Id, Convert.ToDecimal(estante.ProfundidadePrateleiras), Convert.ToDecimal(estante.LarguraPrateleiras), Convert.ToDecimal(estante.AlturaPrateleiras), items));
             });
+            //=====================================================
 
+            var tipoItemEstoque = new TipoItemEstoqueCore().RetornarPorId(TipoItemEstoqueId);
+            var novoItem = new OnlineContainerPacking.Models.Item(-1, Convert.ToDecimal(tipoItemEstoque.Largura), Convert.ToDecimal(tipoItemEstoque.Altura), Convert.ToDecimal(tipoItemEstoque.Profundidade), 1, tipoItemEstoque.Id);
+            
             var itemsToPack = new List<OnlineContainerPacking.Models.Item>();
-
-            //Todo ajeitar parametros
-            var tipoItemEstoque = new TipoItemEstoqueCore().RetornarPorId(2);
-            itemsToPack.Add(new OnlineContainerPacking.Models.Item(-1, Convert.ToDecimal(tipoItemEstoque.Largura), Convert.ToDecimal(tipoItemEstoque.Altura), Convert.ToDecimal(tipoItemEstoque.Profundidade), 1, tipoItemEstoque.Id)); //TODO
+            itemsToPack.Add(novoItem);
 
             OnlineContainerPacking.PackingService.OnlinePack(containers, itemsToPack);
 
-            //Parallel.ForEach(containers.Where(c => c.Alterado).ToList(), c =>
-            //{
-            //    var estante = estantes.Find(e => e.Id == c.ID);
-            //    estante.PackingJson = c.PackingJson;
-
-            //    estanteCore.Alterar(estante);
-            //});
-
-            Parallel.ForEach(itemsToPack.Where(i => i.IsPacked).ToList(), i =>
+            ItemEstoque novoItemEstoque = null;
+            if (novoItem.IsPacked)
             {
+            //Parallel.ForEach(itemsToPack.Where(i => i.IsPacked).ToList(), i =>
+            //{
                 var itemEstoque = new ItemEstoque()
                 {
-                    ItemBaseId = i.ItemBaseId,
-                    EstanteId = i.ContainerId,
-                    PackX = Convert.ToDouble(i.CoordX),
-                    PackY = Convert.ToDouble(i.CoordY),
-                    PackZ = Convert.ToDouble(i.CoordZ),
-                    TipoItemEstoqueId = i.TipoDeItemId, //TODO
+                    ItemBaseId = novoItem.ItemBaseId,
+                    EstanteId = novoItem.ContainerId,
+                    PackX = Convert.ToDouble(novoItem.CoordX),
+                    PackY = Convert.ToDouble(novoItem.CoordY),
+                    PackZ = Convert.ToDouble(novoItem.CoordZ),
+                    TipoItemEstoqueId = novoItem.TipoDeItemId,
                     DataHora = DateTime.Now,
                     UsuarioId = null,
                     Ativo = true
                 };
 
                 itemEstoqueCore.Inserir(itemEstoque);
-            });
 
-            var response = "Associado mais um";
+                novoItemEstoque = itemEstoque;
+            //});
+            }
+
+            var response = new
+            {
+                NovoItemId = novoItemEstoque == null ? -1 : novoItemEstoque.Id,
+                EstanteId = novoItemEstoque == null ? -1 : novoItemEstoque.EstanteId
+            };
 
             return Json(response);
         }

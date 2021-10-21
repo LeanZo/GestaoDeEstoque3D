@@ -3,11 +3,13 @@ var camera;
 var renderer;
 var controls;
 var itemMaterial;
+var itemMaterialSelecionado;
 var view3D;
 var ContainerPackingResult;
 var ContainersResponse;
 var LastItemRenderedIndex = -1;
 var ContainerAtual;
+var itemSelecionadoId = null;
 
 $(document).ready(() => {
 	view3D = new View3D();
@@ -55,6 +57,7 @@ class View3D {
 
 		// Get the item stuff ready.
 		itemMaterial = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
+		itemMaterialSelecionado = new THREE.MeshNormalMaterial({ transparent: true, opacity: 1 });
 
 		renderer = new THREE.WebGLRenderer({ antialias: true }); // WebGLRenderer CanvasRenderer
 		renderer.setClearColor(0xf0f0f0);
@@ -83,7 +86,8 @@ class View3D {
 		renderer.render(scene, camera);
 	}
 
-	ShowPackingView (containerPackingResult) {
+	ShowPackingView(containerPackingResult, ItemSelecionadoId = null) {
+		itemSelecionadoId = ItemSelecionadoId;
 		var containerId = containerPackingResult.ContainerID
 		var container = ContainersResponse.find(elem => elem.ID == containerId);
 
@@ -133,7 +137,12 @@ class View3D {
 			};
 
 			var itemGeometry = new THREE.BoxGeometry(PackedItems[LastItemRenderedIndex].PackDimX, PackedItems[LastItemRenderedIndex].PackDimY, PackedItems[LastItemRenderedIndex].PackDimZ);
-			var cube = new THREE.Mesh(itemGeometry, itemMaterial);
+			var cube;
+			if (itemSelecionadoId != null, PackedItems[LastItemRenderedIndex].ItemId == itemSelecionadoId) {
+				cube = new THREE.Mesh(itemGeometry, itemMaterialSelecionado);
+			} else {
+				cube = new THREE.Mesh(itemGeometry, itemMaterial);
+            }
 			cube.position.set(this.ContainerOriginOffset.x + itemOriginOffset.x + PackedItems[LastItemRenderedIndex].CoordX, this.ContainerOriginOffset.y + itemOriginOffset.y + PackedItems[LastItemRenderedIndex].CoordY, this.ContainerOriginOffset.z + itemOriginOffset.z + PackedItems[LastItemRenderedIndex].CoordZ);
 			cube.name = 'cube' + LastItemRenderedIndex;
 			scene.add(cube);

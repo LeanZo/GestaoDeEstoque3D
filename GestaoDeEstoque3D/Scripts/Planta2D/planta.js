@@ -58,8 +58,8 @@ function InicializarPlanta() {
     var imageBounds = [[-imageHeight / fatorDivisao, -imageWidth / fatorDivisao], [imageHeight / fatorDivisao, imageWidth / fatorDivisao]];
 
     var plantaArmazem = L.imageOverlay(imageUrl, imageBounds);
-    layerControl.addOverlay(plantaArmazem, "Planta baixa");
-    plantaArmazem.addTo(planta);
+    //layerControl.addOverlay(plantaArmazem, "Planta baixa");
+    //plantaArmazem.addTo(planta);
 
     CarregarCamadas();
 }
@@ -121,6 +121,8 @@ function AdicionarCamadas() {
 
         geojsonLayer.addTo(planta);
     }
+
+    planta.fitBounds(camadas["Estantes"].leafletLayer.getBounds());
 }
 
 function onEachFeature(feature, layer) {
