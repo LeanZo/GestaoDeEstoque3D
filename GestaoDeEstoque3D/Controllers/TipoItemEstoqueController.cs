@@ -18,9 +18,14 @@ namespace GestaoDeEstoque3D.Controllers
             return View();
         }
 
-        public JsonResult RetornarTiposItemEstoque()
+        public JsonResult RetornarTiposItemEstoque(bool ApenasAssociados)
         {
-            var tiposItemEstoque = new TipoItemEstoqueCore().RetornarTodos();
+            List<TipoItemEstoque> tiposItemEstoque;
+
+            if(ApenasAssociados)
+                tiposItemEstoque = new TipoItemEstoqueCore().RetornarTodosAssociados();
+            else
+                tiposItemEstoque = new TipoItemEstoqueCore().RetornarTodos();
 
             var response = tiposItemEstoque.Select(est => new
             {

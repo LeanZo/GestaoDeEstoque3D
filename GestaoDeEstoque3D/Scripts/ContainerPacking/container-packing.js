@@ -6,6 +6,7 @@ var viewModel;
 var itemMaterial;
 var ContainerPackingResult;
 var ContainersResponse;
+var BalcaoAncoragem;
 var itemIndex = -1;
 
 async function PackContainers(request) {
@@ -17,6 +18,7 @@ async function PackContainers(request) {
 		success: function (response) {
 			ContainerPackingResult = response.PackResult;
 			ContainersResponse = response.Containers
+			BalcaoAncoragem = response.BalcaoAncoragem;
 			viewModel.ShowPackingView(ContainerPackingResult[0]);
         }
 	});

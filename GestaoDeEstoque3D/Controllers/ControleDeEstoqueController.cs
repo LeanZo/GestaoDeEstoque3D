@@ -85,5 +85,24 @@ namespace GestaoDeEstoque3D.Controllers
 
             return Json(response);
         }
+
+        public JsonResult RetirarItem(int TipoItemEstoqueId)
+        {
+            var itemEstoqueCore = new ItemEstoqueCore();
+
+            var itemEstoque = itemEstoqueCore.RetornarUltimoAssociadoPorTipoId(TipoItemEstoqueId);
+            var estanteId = itemEstoque.EstanteId;
+
+            itemEstoque.EstanteId = null;
+            itemEstoqueCore.Alterar(itemEstoque);
+
+            var response = new
+            {
+                ItemId = itemEstoque.Id,
+                EstanteId = estanteId ?? -1
+            };
+
+            return Json(response);
+        }
     }
 }

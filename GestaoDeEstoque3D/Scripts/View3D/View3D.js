@@ -7,6 +7,7 @@ var itemMaterialSelecionado;
 var view3D;
 var ContainerPackingResult;
 var ContainersResponse;
+var BalcaoAncoragem;
 var LastItemRenderedIndex = -1;
 var ContainerAtual;
 var itemSelecionadoId = null;
@@ -27,7 +28,8 @@ async function PackContainers(request) {
 		contentType: 'application/json; charset=utf-8',
 		success: function (response) {
 			ContainerPackingResult = response.PackResult;
-			ContainersResponse = response.Containers
+			ContainersResponse = response.Containers;
+			BalcaoAncoragem = response.BalcaoAncoragem;
 			view3D.ShowPackingView(ContainerPackingResult[0]);
 		}
 	});

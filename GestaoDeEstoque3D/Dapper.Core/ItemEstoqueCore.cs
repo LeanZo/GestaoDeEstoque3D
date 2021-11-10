@@ -9,6 +9,32 @@ namespace GestaoDeEstoque3D.Dapper.Core
 {
     public class ItemEstoqueCore : TabelaBaseCore<ItemEstoque>
     {
+        public ItemEstoque RetornarUltimoAssociadoPorTipoId(int TipoItemEstoqueId)
+        {
+            ItemEstoque ItemsEstoque = null;
+            using (var connection = DapperConnection.Create())
+            {
+                ItemsEstoque = connection.Query<ItemEstoque, TipoItemEstoque, ItemEstoque>(
+                    @"select * from tbl_item_estoque ite
+                      inner join tbl_tipo_item_estoque tie on tie_id = ite_tie_id
+                      where ite_tie_id = @TipoItemEstoqueId
+                      and ite_est_id is not null 
+                      order by ite_id desc
+                      limit 1",
+                    (ITE, TIE) =>
+                    {
+                        ITE.TipoItemEstoque = TIE;
+
+                        return ITE;
+                    },
+                    param: new { TipoItemEstoqueId },
+                    splitOn: "ite_id, tie_id"
+                ).FirstOrDefault();
+            }
+
+            return ItemsEstoque;
+        }
+
         public List<ItemEstoque> RetornarTodos()
         {
             List<ItemEstoque> ItemEstoque;

@@ -71,8 +71,8 @@
         <div class="modal-template-body">
             <div id="tabela-adicionar-estante"></div>
             <button type="button" class="button-template" onclick="ItensDeEstoque.AbrirModalEstocar();" style="margin-bottom: 5px">Estocar</button>
-            <button type="button" class="button-template" style="margin-bottom: 5px">Retirar</button>
-            <button type="button" class="button-template" style="margin-bottom: 5px">Lançar Perda</button>
+            <button type="button" class="button-template" onclick="ItensDeEstoque.AbrirModalRetirar();" style="margin-bottom: 5px">Retirar</button>
+            @*<button type="button" class="button-template" style="margin-bottom: 5px">Lançar Perda</button>*@
             <button type="button" class="button-template" onclick="$('#ModalItensDeEstoque').css('display', 'none')">Fechar</button>
         </div>
     </div>
@@ -86,6 +86,18 @@
         <div class="modal-template-body">
             <div id="tabela-modal-itens-de-estoque"></div>
             <button type="button" class="button-template" onclick="$('#ModaItensDeEstoque').css('display', 'none')">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<div id="ModalRetirarItensDeEstoque" class="modal-template-container">
+    <div class="modal-template-inner-container" style="box-shadow: 0px 0px 20px 2px black;padding: 5px 15px;">
+        <div class="modal-template-header">
+            <h2 id="ModaItensDeEstoque-Header" class="modal-h2">Itens de Estoque - Retirar</h2>
+        </div>
+        <div class="modal-template-body">
+            <div id="tabela-modal-retirar-itens-de-estoque"></div>
+            <button type="button" class="button-template" onclick="$('#ModalRetirarItensDeEstoque').css('display', 'none')">Fechar</button>
         </div>
     </div>
 </div>
@@ -104,3 +116,5 @@
 <script src="~/Scripts/Planta2D/planta.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D/ItensDeEstoque.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/View3D/View3D.js?v=@ViewBag.Versao"></script>
+
+<script src="~/Scripts/bundle/main.js?v=@ViewBag.Versao"></script>

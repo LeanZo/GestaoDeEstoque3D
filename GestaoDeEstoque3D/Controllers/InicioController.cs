@@ -2,6 +2,7 @@
 using CromulentBisgetti.ContainerPacking.Entities;
 using GestaoDeEstoque3D.Dapper.Core;
 using GestaoDeEstoque3D.Dapper.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace GestaoDeEstoque3D.Controllers
 
         public JsonResult ContainerPacking()
         {
+            var balcaoAncoragemDefinition = new { lat = new double(), lng = new double() };
+            var balcaoAncoragem = JsonConvert.DeserializeAnonymousType(new SistemaConfiguracaoCore().RetornarPorNome("balcao-ancoragem-latlng").Valor, balcaoAncoragemDefinition);
+
             var estantes = new EstanteCore().RetornarTodosComItens();
 
             var PackResult = estantes.Select(e => new
@@ -34,7 +38,12 @@ namespace GestaoDeEstoque3D.Controllers
                     CoordX = i.PackX,
                     CoordY = i.PackY,
                     CoordZ = i.PackZ
-                })
+                }),
+                Ancoragem = new
+                {
+                    Lat = e.AncoragemLat,
+                    Lng = e.AncoragemLng,
+                }
             });
 
             var Containers = estantes.Select(e => new {
@@ -47,7 +56,12 @@ namespace GestaoDeEstoque3D.Controllers
             var response = new
             {
                 PackResult,
-                Containers
+                Containers,
+                BalcaoAncoragem = new
+                {
+                    Lat = balcaoAncoragem.lat,
+                    Lng = balcaoAncoragem.lng
+                }
             };
 
             return Json(response);

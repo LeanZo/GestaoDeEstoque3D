@@ -232,10 +232,14 @@
     <Content Include="Libraries\tabulator\tabulator.min.css" />
     <Content Include="Libraries\tabulator\tabulator.min.js" />
     <Content Include="Libraries\three\three-min.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bundle\main.js" />
     <Content Include="Scripts\ContainerPacking\container-packing.js" />
     <Content Include="Scripts\ContainerPacking\online-packing-test.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
     <Content Include="Scripts\Planta2D\ItensDeEstoque.js" />
+    <Content Include="webpack.config.js" />
+    <Content Include="Scripts\Planta2D\Rota.js" />
     <Content Include="Scripts\TipoItemEstoque\cadastro.js" />
     <Content Include="Scripts\Estante\cadastro-estantes.js" />
     <Content Include="Scripts\Planta2D.Controls\adicionar-estante.js" />
@@ -267,6 +271,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="package.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +314,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>npm run wbp</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

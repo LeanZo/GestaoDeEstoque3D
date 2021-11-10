@@ -7,6 +7,12 @@ var estantesAssociadas;
 var dragStartId = 1;
 var dragEndId = 0;
 
+//rota
+var startRota = null;
+var endRota = null;
+var linhaRota = null;
+var estanteRota = null;
+
 InicializarPlanta();
 
 function InicializarPlanta() {
@@ -26,13 +32,15 @@ function InicializarPlanta() {
         position: 'topleft',
         drawMarker: false,
         drawCircleMarker: false,
-        drawPolyline: false,
+        drawPolyline: true,
         drawRectangle: false,
         drawPolygon: false,
         drawCircle: false,
-        editMode: false,
+        editMode: true,
         cutPolygon: false
     }); 
+
+    planta.pm.setGlobalOptions({ snappable: true, snapDistance: 20, snapMiddle: true });
 
     var containers = [];
 
@@ -41,8 +49,42 @@ function InicializarPlanta() {
 
     CriarToolbar(containers);
 
+    planta.on('click', function (e) {
+        console.log(e);
+
+        //if (!desenhandoPoligono) {
+        //    if (startRota == null) {
+        //        startRota = L.marker(e.latlng).addTo(planta);
+        //    } else if (endRota == null) {
+        //        endRota = L.marker(e.latlng).addTo(planta);
+        //        var linha = Gestao.Rota.Gerar(startRota.toGeoJSON(), endRota.toGeoJSON());
+        //        if (linha != null) {
+        //            linhaRota = linha;
+        //            linhaRota.addTo(planta);
+        //        }
+        //    } else {
+        //        if (linhaRota != null)
+        //            linhaRota.removeFrom(planta);
+        //        linhaRota = null;
+
+        //        startRota.removeFrom(planta);
+        //        endRota.removeFrom(planta);
+        //        startRota = null;
+        //        endRota = null;
+        //    }
+        //}
+    });
+
+    planta.on('pm:drawstart', function (e) {
+        desenhandoPoligono = true;
+    });
+
     planta.on('pm:drawend', function (e) {
         desenhandoPoligono = false;
+    });
+
+    planta.on('pm:edit', function (event) {
+        SalvarPoligono(event.layer, event.layer.feature.properties.CamadaId, event.layer.feature.properties.CamadaNome);
     });
 
     planta.on('pm:create', function (event) {
@@ -62,6 +104,34 @@ function InicializarPlanta() {
     //plantaArmazem.addTo(planta);
 
     CarregarCamadas();
+}
+
+function LimparRota() {
+    if (linhaRota != null)
+        linhaRota.removeFrom(planta);
+
+    linhaRota = null;
+
+    if (estanteRota != null)
+        estanteRota.setStyle({ fillOpacity: 0.2 });
+
+    estanteRota = null;
+}
+
+function ExibirRota(latLgnInicio, latLgnFim, estanteId) {
+    LimparRota();
+
+    var _estante = estantesAssociadas.find(i => i.Id == estanteId);
+    estanteRota = camadas["Estantes"].leafletLayer.getLayers().find(layer => layer.feature.properties.PoligonoId == _estante.PoligonoId);
+
+    if (estanteRota != null)
+        estanteRota.setStyle({ fillOpacity: 0.6 });
+
+    var linha = Gestao.Rota.Gerar(L.marker(L.latLng(latLgnInicio.Lat, latLgnInicio.Lng)).toGeoJSON(), L.marker(L.latLng(latLgnFim.Lat, latLgnFim.Lng)).toGeoJSON());
+    if (linha != null) {
+        linhaRota = linha;
+        linhaRota.addTo(planta);
+    }
 }
 
 function LimparPlanta() {
@@ -123,10 +193,14 @@ function AdicionarCamadas() {
     }
 
     planta.fitBounds(camadas["Estantes"].leafletLayer.getBounds());
+
+    Gestao.Rota.Inicializar(camadas["Corredores"].geojson);
 }
 
 function onEachFeature(feature, layer) {
-    layer.on('click', function (e) {
+    layer.on('click', async function (e) {
+        await PackContainers();
+
         poligonoSelecionado = layer;
 
         console.log(e.target.feature.properties);
@@ -142,6 +216,8 @@ function onEachFeature(feature, layer) {
                 view3D.PackAllItemsInRender();
             }
         }
+
+        LimparRota();
 
         //if (poligonoSelecionado.feature.properties.CamadaNome == "Estantes") {
         //    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
