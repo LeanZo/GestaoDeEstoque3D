@@ -46,6 +46,9 @@ namespace GestaoDeEstoque3D.Dapper.Map
 
             Map(p => p.AncoragemLng)
                 .ToColumn("est_ancoragem_lng");
+            
+            Map(p => p.Nivel)
+                .ToColumn("est_nivel");
         }
     }
 }

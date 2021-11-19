@@ -207,8 +207,14 @@ function onEachFeature(feature, layer) {
 
         view3D.UnpackAllItemsInRender();
 
-        var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == e.target.feature.properties.PoligonoId);
+        var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == e.target.feature.properties.PoligonoId && i.Nivel == 1);
         if (estanteAssociada != null) {
+            $('#select-nivel-prateleira').empty();
+
+            for (var i = 1; i <= estanteAssociada.QuantidadePrateleiras; i++){
+                $('#select-nivel-prateleira').append(`<option value="${i}">${i}</option>`)
+            }
+
             var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == estanteAssociada.Id);
 
             if (containerPackingResult != null) {
@@ -250,7 +256,7 @@ function onEachFeature(feature, layer) {
     var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == layer.feature.properties.PoligonoId);
     
     if (estanteAssociada != null) {
-        layer.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Níveis: ' + estanteAssociada.QuantidadePrateleiras, {
+        layer.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Prateleiras: ' + estanteAssociada.QuantidadePrateleiras, {
             permanent: true,
             opacity: 1,
             className: 'label-planta',
@@ -375,7 +381,7 @@ function AdicionarReferenciaEstante(poligono, estanteId) {
             var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligono.feature.properties.PoligonoId);
 
             if (estanteAssociada != null) {
-                poligono.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Níveis: ' + estanteAssociada.QuantidadePrateleiras, {
+                poligono.bindTooltip('Cód.: ' + estanteAssociada.Id + '<br>Prateleiras: ' + estanteAssociada.QuantidadePrateleiras, {
                     permanent: true,
                     opacity: 1,
                     className: 'label-planta',
@@ -412,3 +418,23 @@ function RemoverReferenciaEstante() {
         });
     }
 }
+
+async function TrocarNivel(event) {
+    await PackContainers();
+
+    view3D.UnpackAllItemsInRender();
+
+    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligonoSelecionado.feature.properties.PoligonoId && i.Nivel == $(event.target).val());
+
+    if (estanteAssociada != null) {
+        var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == estanteAssociada.Id);
+
+        if (containerPackingResult != null) {
+            view3D.ShowPackingView(containerPackingResult);
+            view3D.PackAllItemsInRender();
+        }
+    }
+}
+
+//$('#select-nivel-prateleira').on('change', async function () {
+//});

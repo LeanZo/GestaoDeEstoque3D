@@ -24,6 +24,7 @@ namespace GestaoDeEstoque3D.Dapper.Model
         public int? ArmazemId { get; set; }
         public double? AncoragemLat { get; set; }
         public double? AncoragemLng { get; set; }
+        public int Nivel { get; set; }
 
         public List<ItemEstoque> ItemsEstoque { get; set; }
     }

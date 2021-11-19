@@ -48,6 +48,7 @@ namespace GestaoDeEstoque3D.Controllers
                     est.Id,
                     est.QuantidadePrateleiras,
                     est.PoligonoId,
+                    est.Nivel
                 })
             };
 
