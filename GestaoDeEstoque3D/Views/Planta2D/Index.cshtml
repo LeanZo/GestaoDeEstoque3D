@@ -19,14 +19,54 @@
     <script src="https://kit.fontawesome.com/083c25095f.js" crossorigin="anonymous"></script>
 </head>
 
-<div class="planta-container">
-    <div id="planta"></div>
+<div class="page-container">
+    <div class="header">
+        <label>Armazém 3D</label>
+    </div>
+    <div class="conteudo-container">
+            <div id="planta"></div>
+
+            <div class="acoes-crud-container">
+                <div class="acoes-crud acoes-crud-selecionado" style="width: 120px"><img src="~/Content/Icones/menu.svg" width="24" height="24">Estantes</div>
+                <div class="acoes-crud" style="width: 184px"><img src="~/Content/Icones/inbox.svg" width="24" height="24">Itens de Estoque</div>
+            </div>
+    </div>
 </div>
 
+
 <div class="view-3d-container">
-    <select id="select-nivel-prateleira" onchange="TrocarNivel(event)" style="position: absolute;">
+    @*<select id="select-nivel-prateleira" onchange="TrocarNivel(event)" style="position: absolute;">
         <option value="1">1</option>
-    </select>
+    </select>*@
+    <div class="nivel-container">
+        <div class="nivel-seletor nivel-seletor-ativo">
+            1
+        </div>
+        <div class="nivel-seletor">
+            2
+        </div>
+        <div class="nivel-seletor">
+            3
+        </div>
+        <div class="nivel-seletor">
+            4
+        </div>
+        <div class="nivel-seletor">
+            5
+        </div>
+        <div class="nivel-seletor">
+            6
+        </div>
+        <div class="nivel-seletor">
+            7
+        </div>
+        <div class="nivel-seletor">
+            8
+        </div>
+        <div class="nivel-seletor">
+            9
+        </div>
+    </div>
     <div id="view-3d"></div>
 </div>
 

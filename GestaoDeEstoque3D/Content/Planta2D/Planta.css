@@ -1,23 +1,136 @@
-﻿body {
+﻿@font-face {
+    font-family: Poppins;
+    src: url(/Content/Fonts/Poppins/Poppins-Regular.ttf);
+}
+
+body {
     margin: 0;
 }
 
-.planta-container {
+.page-container {
     width: 100%;
     height: 100%;
     position: absolute;
 }
+
+.header {
+    width: 100%;
+    height: 64px;
+    background: linear-gradient(116.82deg, #48A9FE 0%, #0BEEF9 100%), #FFFFFF;
+}
+
+    .header > label {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 40px;
+        color: #FFFFFF;
+        margin-left: 21px;
+    }
+
+.conteudo-container {
+    width: 100%;
+    height: calc(100% - 64px);
+}
+
+/*====ESTILOS DOS BOTOES DO LEAFLET===================*/
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: 2px solid #46AAFE;
+}
+
+.control-icon {
+    color: #46AAFE !important;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(12%) saturate(7210%) hue-rotate(184deg) brightness(102%) contrast(99%);
+}
+
+.leaflet-bar a, .leaflet-bar a:hover {
+    color: #46AAFE !important;
+    border-bottom: 1px solid #46AAFE;
+}
+
+a.leaflet-buttons-control-button.toolbar-a {
+    border-bottom: 1px solid #46AAFE !important;
+}
+
+a.leaflet-control-layers-toggle {
+    color: #46AAFE !important;
+    filter: invert(60%) sepia(12%) saturate(7210%) hue-rotate( 184deg) brightness(102%) contrast(99%);
+}
+
+.leaflet-control-layers-overlays {
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.leaflet-container {
+    background: #fff;
+}
+
+a.leaflet-buttons-control-button {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.leaflet-top.leaflet-left {
+    margin-top: 90px;
+}
+/*===============================================*/
 
 #planta {
     width: 100%;
     height: 100%;
 }
 
+.acoes-crud-container {
+    width: 338px;
+    height: 60px;
+    background: green;
+    position: absolute;
+    top: 82px;
+    left: 10px;
+    background: #FFFFFF;
+    border: 2px solid #46ABFE;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.acoes-crud {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 16px;
+    border: 2px solid #46AAFE;
+    border-radius: 10px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #46AAFE !important;
+}
+
+.acoes-crud > img {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(12%) saturate(7210%) hue-rotate(184deg) brightness(102%) contrast(99%);
+}
+
+.acoes-crud-selecionado {
+    color: #FFFFFF !important;
+    background: #46aafe;
+}
+
+.acoes-crud-selecionado > img {
+    filter: brightness(100) saturate(100%);
+}
+
 .label-planta {
     background: none;
     border: none;
     box-shadow: none;
-
+    font-family: Poppins;
 }
 
 /*.leaflet-tooltip-left.label-planta::before {
@@ -29,13 +142,15 @@
 }*/
 
 
-.leaflet-label {
+/*.leaflet-label {
     width: 100px;
     line-height: 12px;
     text-align: center;
+    font-family: Poppins;
 }
 
     .leaflet-label .pct {
         font-size: 20px;
         font-weight: 600;
-    }
+        font-family: Poppins;
+    }*/

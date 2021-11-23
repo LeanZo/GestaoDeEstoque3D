@@ -61,8 +61,9 @@ class View3D {
 		itemMaterial = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
 		itemMaterialSelecionado = new THREE.MeshNormalMaterial({ transparent: true, opacity: 1 });
 
-		renderer = new THREE.WebGLRenderer({ antialias: true }); // WebGLRenderer CanvasRenderer
-		renderer.setClearColor(0xf0f0f0);
+		renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // WebGLRenderer CanvasRenderer
+		//renderer.setClearColor(0xf0f0f0);
+		//renderer.setClearColor(0xffffff);
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(400, 400);
 		container.append(renderer.domElement);

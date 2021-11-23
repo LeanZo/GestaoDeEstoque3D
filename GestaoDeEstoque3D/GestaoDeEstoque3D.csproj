@@ -202,15 +202,36 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Icones\inbox.svg" />
+    <Content Include="Content\Icones\menu.svg" />
     <Content Include="Content\Imagens\exemplo-planta.png" />
     <Content Include="Content\Planta2D\View3D.css" />
     <Content Include="Content\Planta2D\Planta.css" />
     <Content Include="Content\Planta2D\toolbar.css" />
+    <Content Include="Content\Fonts\Poppins\OFL.txt" />
     <Content Include="Content\Shared\Layout.css" />
     <Content Include="DLLs\3DContainerPacking\CromulentBisgetti.ContainerPacking.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Black.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Light.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\Fonts\Poppins\Poppins-ThinItalic.ttf" />
     <None Include="Libraries\jquery-validate\jquery.validate-vsdoc.js" />
     <Content Include="Libraries\jquery\jquery-3.6.0.min.js" />
     <Content Include="Libraries\ko\ko-mapping.js" />
