@@ -148,7 +148,7 @@ function CarregarCamadas() {
 
     $.ajax({
         type: 'POST',
-        url: 'Planta2D/CarregarCamadas',
+        url: '/Planta2D/CarregarCamadas',
         success: function (response) {
             estantesAssociadas = response.estantesAssociadas;
 

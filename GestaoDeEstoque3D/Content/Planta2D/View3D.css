@@ -4,7 +4,7 @@
     position: absolute;
     border: solid 2px;
     border-color: rgba(70, 171, 254, 0.34);
-    z-index: 1000;
+    z-index: 900;
     bottom: 0;
     right: 0;
     margin-bottom: 10px;

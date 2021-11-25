@@ -94,7 +94,7 @@ a.leaflet-buttons-control-button {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    z-index: 1000;
+    z-index: 1100;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(4px);
 }
@@ -125,6 +125,139 @@ a.leaflet-buttons-control-button {
 .acoes-crud-selecionado > img {
     filter: brightness(100) saturate(100%);
 }
+
+.modal-container {
+    width: 100%;
+    height: calc(100% - 64px);
+    position: absolute;
+    top: 64px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-inner-container {
+    width: calc(100% - 20px);
+    height: calc(100% - 120px);
+    margin-top: 80px;
+    border-radius: 20px;
+    background: linear-gradient( 116.82deg, rgba(72, 169, 254, 0.7) 0%, rgba(11, 238, 249, 0.7) 100%);
+}
+
+.modal-lista-header {
+    width: 100%;
+    height: 100px;
+}
+
+.modal-lista-corpo {
+    width: calc(100% - 40px);
+    height: calc(100% - 100px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    column-gap: 20px;
+    row-gap: 0;
+    overflow: scroll;
+    overflow-x: hidden;
+    justify-content: flex-start;
+    padding: 0 20px;
+}
+
+.modal-item-container {
+    width: 222px;
+    background: linear-gradient( 103.09deg, rgba(255, 255, 255, 0.8) -4.87%, rgba(255, 255, 255, 0) 166.29%);
+    backdrop-filter: blur(50px);
+    border-radius: 20px;
+    border: 1px solid;
+    border-color: rgba(255,255,255,0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.item-header {
+    width: calc(100% - 20px);
+    height: 41px;
+    background: white;
+    border-radius: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    color: #46ABFE;
+}
+
+.item-corpo {
+    width: calc(100% - 20px);
+    background: white;
+    border-radius: 20px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #46ABFE;
+}
+
+    .item-corpo > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        margin: 10px 0;
+    }
+
+    .item-corpo > hr {
+        margin: 0 18px;
+        color: #EAEAEA;
+        background: #EAEAEA !important;
+        border-color: #EAEAEA;
+        border: 0;
+        border-top: 1px solid #EAEAEA;
+    }
+
+.item-footer {
+    width: calc(100% - 20px);
+    height: 44px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item-botao {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 43px;
+    border: 1px solid rgba(70, 171, 254, 0.6);
+    cursor: pointer;
+}
+
+    .item-botao > img {
+        filter: brightness(0) saturate(100%) invert(60%) sepia(12%) saturate(7210%) hue-rotate( 184deg) brightness(102%) contrast(99%);
+    }
+
+.item-botao-deletar {
+    border: 1px solid rgb(254 70 70 / 50%);
+}
+
+    .item-botao-deletar > img {
+        filter: brightness(0) saturate(100%) invert(52%) sepia(61%) saturate(6361%) hue-rotate(336deg) brightness(103%) contrast(99%);
+    }
 
 .label-planta {
     background: none;
