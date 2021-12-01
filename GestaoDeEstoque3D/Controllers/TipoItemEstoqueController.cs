@@ -18,7 +18,7 @@ namespace GestaoDeEstoque3D.Controllers
             return View();
         }
 
-        public JsonResult RetornarTiposItemEstoque(bool ApenasAssociados)
+        public JsonResult RetornarTiposItemEstoque(bool ApenasAssociados = false)
         {
             List<TipoItemEstoque> tiposItemEstoque;
 
