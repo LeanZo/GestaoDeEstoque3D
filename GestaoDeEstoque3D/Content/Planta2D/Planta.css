@@ -139,6 +139,94 @@ a.leaflet-buttons-control-button {
     justify-content: center;
 }
 
+.modal-cadastro-container {
+    z-index: 1200;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.modal-cadastro-inner-container {
+    width: 376px;
+    /* height: calc(100% - 120px); */
+    border-radius: 20px;
+    background: linear-gradient( 103.09deg, rgba(255, 255, 255, 0.6) -4.87%, rgba(255, 255, 255, 0.6) 166.29%);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(255 255 255 / 60%);
+}
+
+.modal-cadastro-header {
+    width: 356px;
+    height: 61px;
+    border-radius: 20px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    color: #46ABFE;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.modal-cadastro-corpo {
+    width: 356px;
+    background: white;
+    border-radius: 20px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    color: #46ABFE;
+}
+
+    .modal-cadastro-corpo > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        margin: 10px 0;
+    }
+
+    .modal-cadastro-corpo > hr {
+        margin: 0 18px;
+        color: #EAEAEA;
+        background: #EAEAEA !important;
+        border-color: #EAEAEA;
+        border: 0;
+        border-top: 1px solid #EAEAEA;
+    }
+
+.modal-cadastro-footer {
+    width: 356px;
+    height: 64px;
+    border-radius: 20px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #46ABFE;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.modal-cadastro-input {
+    width: 200px;
+    height: 26px;
+    background: #FFFFFF;
+    border: 1px solid #46AAFE;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    font-size: 14px;
+}
+
 .modal-close {
     position: absolute;
     right: 10px;

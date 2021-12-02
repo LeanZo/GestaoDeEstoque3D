@@ -202,6 +202,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Icones\checkmark.svg" />
     <Content Include="Content\Icones\close.svg" />
     <Content Include="Content\Icones\edit.svg" />
     <Content Include="Content\Icones\inbox.svg" />
@@ -265,6 +266,8 @@
     <Content Include="Scripts\ContainerPacking\container-packing.js" />
     <Content Include="Scripts\ContainerPacking\online-packing-test.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
+    <Content Include="Scripts\Planta2D\CadEstante.js" />
+    <Content Include="Scripts\Planta2D\CadItem.js" />
     <Content Include="Scripts\Planta2D\ItensDeEstoque.js" />
     <Content Include="Scripts\Planta2D\ModalLista.js" />
     <Content Include="webpack.config.js" />

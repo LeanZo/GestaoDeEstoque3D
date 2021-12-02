@@ -50,7 +50,7 @@
             this.Carregar();
         }
 
-        static Carregar() {
+        static Carregar(callback = () => {}) {
             $('#modal-lista-corpo').empty();
 
             $.ajax({
@@ -108,16 +108,18 @@
                                     <div class="item-botao">
                                         <img src="/Content/Icones/layers.svg" width="24" height="24">
                                     </div>
-                                    <div class="item-botao">
+                                    <div class="item-botao" onclick="CadEstante.Abrir(${result[i].Id})">
                                         <img src="/Content/Icones/edit.svg" width="24" height="24">
                                     </div>
-                                    <div class="item-botao item-botao-deletar">
+                                    <div class="item-botao item-botao-deletar" onclick="CadEstante.Deletar.Abrir(${result[i].Id})">
                                         <img src="/Content/Icones/trash.svg" width="24" height="24">
                                     </div>
                                 </div>
                             </div>
                         `);
                     }
+
+                    callback();
                 },
                 error: function (req, status, error) {
                     console.log("Erro.");
@@ -142,7 +144,7 @@
             this.Carregar();
         }
 
-        static Carregar() {
+        static Carregar(callback = () => { }) {
             $('#modal-lista-corpo').empty();
 
             $.ajax({
@@ -165,6 +167,13 @@
                                             Código
                                         </span>
                                         <span>${result[i].Id}</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <span>
+                                            Código de Barras
+                                        </span>
+                                        <span>${result[i].CodigoDeBarras}</span>
                                     </div>
                                     <hr>
                                     <div>
@@ -209,16 +218,18 @@
                                     <div class="item-botao">
                                         <img src="/Content/Icones/minus.svg" width="24" height="24">
                                     </div>
-                                    <div class="item-botao">
+                                    <div class="item-botao" onclick="CadItem.Abrir(${result[i].Id})">
                                         <img src="/Content/Icones/edit.svg" width="24" height="24">
                                     </div>
-                                    <div class="item-botao item-botao-deletar">
+                                    <div class="item-botao item-botao-deletar" onclick="CadItem.Deletar.Abrir(${result[i].Id})">
                                         <img src="/Content/Icones/trash.svg" width="24" height="24">
                                     </div>
                                 </div>
                             </div>
                         `);
                     }
+
+                    callback();
                 },
                 error: function (req, status, error) {
                     console.log("Erro.");
