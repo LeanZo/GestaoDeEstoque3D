@@ -35,8 +35,8 @@ namespace GestaoDeEstoque3D.Dapper.Map
             Map(p => p.PackZ)
                 .ToColumn("ite_pack_z");
 
-            Map(p => p.EstanteId)
-                .ToColumn("ite_est_id");
+            Map(p => p.PrateleiraId)
+                .ToColumn("ite_pra_id");
             
             Map(p => p.ItemBaseId)
                 .ToColumn("ite_item_base_id");

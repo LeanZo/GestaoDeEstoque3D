@@ -170,6 +170,7 @@
     <Compile Include="Controllers\EstanteController.cs" />
     <Compile Include="Controllers\Planta2DController.cs" />
     <Compile Include="Dapper.Core\ArmazemCore.cs" />
+    <Compile Include="Dapper.Core\PrateleiraCore.cs" />
     <Compile Include="Dapper.Core\ItemEstoqueCore.cs" />
     <Compile Include="Dapper.Core\TipoItemEstoqueCore.cs" />
     <Compile Include="Dapper.Core\EstanteCore.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Dapper.Core\TabelaBaseCore.cs" />
     <Compile Include="Dapper.Core\SistemaConfiguracaoCore.cs" />
     <Compile Include="Dapper.Map\ArmazemMap.cs" />
+    <Compile Include="Dapper.Map\PrateleiraMap.cs" />
     <Compile Include="Dapper.Map\ItemEstoqueMap.cs" />
     <Compile Include="Dapper.Map\TipoItemEstoqueMap.cs" />
     <Compile Include="Dapper.Map\EstanteMap.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Dapper.Map\CamadaMap.cs" />
     <Compile Include="Dapper.Map\SistemaConfiguracaoMap.cs" />
     <Compile Include="Dapper.Model\Armazem.cs" />
+    <Compile Include="Dapper.Model\Prateleira.cs" />
     <Compile Include="Dapper.Model\ItemEstoque.cs" />
     <Compile Include="Dapper.Model\TipoItemEstoque.cs" />
     <Compile Include="Dapper.Model\Estante.cs" />
@@ -263,8 +266,6 @@
     <Content Include="Libraries\three\three-min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bundle\main.js" />
-    <Content Include="Scripts\ContainerPacking\container-packing.js" />
-    <Content Include="Scripts\ContainerPacking\online-packing-test.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
     <Content Include="Scripts\Planta2D\CadEstante.js" />
     <Content Include="Scripts\Planta2D\CadItem.js" />
@@ -289,14 +290,15 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Inicio\Index.cshtml" />
     <Content Include="Views\Planta2D\Index.cshtml" />
     <Content Include="Views\Estante\Index.cshtml" />
     <Content Include="Views\TipoItemEstoque\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\ContainerPacking\" />
     <Folder Include="Views\ControleDeEstoque\" />
+    <Folder Include="Views\Inicio\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

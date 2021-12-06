@@ -23,6 +23,8 @@ namespace GestaoDeEstoque3D.Controllers
             var camadas = new CamadaCore().RetornarTodos();
             var poligonos = new PoligonoCore().RetornarTodos();
             var estantesAssociadas = new EstanteCore().RetornarEstantesAssociadas();
+            var prateleiras = new List<Prateleira>();
+            estantesAssociadas.Select(e => e.Prateleiras).ToList().ForEach(e => prateleiras.AddRange(e));
 
             var camadasGeojson = new List<CamadaGeojsonVM>();
 
@@ -47,8 +49,12 @@ namespace GestaoDeEstoque3D.Controllers
                 estantesAssociadas = estantesAssociadas.Select(est => new { 
                     est.Id,
                     est.QuantidadePrateleiras,
-                    est.PoligonoId,
-                    est.Nivel
+                    est.PoligonoId
+                }),
+                prateleiras = prateleiras.Select(pra => new { 
+                    pra.Id,
+                    pra.EstanteId,
+                    pra.Nivel
                 })
             };
 

@@ -24,5 +24,8 @@ namespace GestaoDeEstoque3D.Dapper.Model
         public int? UsuarioId { get; set; }
         public DateTime DataHora { get; set; }
         public bool Ativo { get; set; }
+
+
+        public bool PossuiAssociacao { get; set; }
     }
 }

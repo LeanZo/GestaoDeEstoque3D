@@ -121,4 +121,62 @@
             });
         }
     }
+
+    static Estocar(id) {
+        $.ajax({
+            type: "POST",
+            url: "/ControleDeEstoque/EstocarNovoItem",
+            data: { TipoItemEstoqueId: id },
+            success: async function (result) {
+                if (result.NovoItemId != -1) {
+                    await PackContainers();
+
+                    view3D.UnpackAllItemsInRender();
+
+                    var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == result.PrateleiraId);
+
+                    if (containerPackingResult != null) {
+                        view3D.ShowPackingView(containerPackingResult, result.NovoItemId);
+                        view3D.PackAllItemsInRender();
+                    }
+
+                    ExibirRota(BalcaoAncoragem, containerPackingResult.Ancoragem, containerPackingResult.ContainerID);
+
+                    ModalLista.Fechar();
+                }
+            },
+            error: function (req, status, error) {
+                console.log("Erro.");
+            }
+        });
+    }
+
+    static Retirar(id) {
+        $.ajax({
+            type: "POST",
+            url: "/ControleDeEstoque/RetirarItem",
+            data: { TipoItemEstoqueId: id },
+            success: async function (result) {
+                if (result.ItemId != -1) {
+                    //await PackContainers();
+
+                    view3D.UnpackAllItemsInRender();
+
+                    var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == result.PrateleiraId);
+
+                    if (containerPackingResult != null) {
+                        view3D.ShowPackingView(containerPackingResult, result.ItemId);
+                        view3D.PackAllItemsInRender();
+                    }
+
+                    ExibirRota(BalcaoAncoragem, containerPackingResult.Ancoragem, containerPackingResult.ContainerID);
+
+                    ModalLista.Fechar();
+                }
+            },
+            error: function (req, status, error) {
+                console.log("Erro.");
+            }
+        });
+    }
 }

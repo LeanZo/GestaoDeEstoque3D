@@ -30,6 +30,7 @@ namespace GestaoDeEstoque3D.Controllers
                 AlturaPrat = est.AlturaPrateleiras,
                 ProfundidadePrat = est.ProfundidadePrateleiras,
                 PesoMaximoPrat = est.PesoMaximoPrateleiras,
+                Associado = est.Associado
             });
 
             var return_json = Json(response, JsonRequestBehavior.AllowGet);

@@ -1,7 +1,7 @@
 ﻿@using GestaoDeEstoque3D.Dapper.Core
 
 @{
-    ViewBag.Title = "Planta 2D";
+    ViewBag.Title = "Armazém 3D";
 
     ViewBag.Versao = new SistemaConfiguracaoCore().RetornarPorNome("versao").Valor;
 }
@@ -233,36 +233,9 @@
 
 
 <div class="view-3d-container">
-    @*<select id="select-nivel-prateleira" onchange="TrocarNivel(event)" style="position: absolute;">
-        <option value="1">1</option>
-    </select>*@
-    <div class="nivel-container">
+    <div id="select-nivel-prateleira" class="nivel-container">
         <div class="nivel-seletor nivel-seletor-ativo">
             1
-        </div>
-        <div class="nivel-seletor">
-            2
-        </div>
-        <div class="nivel-seletor">
-            3
-        </div>
-        <div class="nivel-seletor">
-            4
-        </div>
-        <div class="nivel-seletor">
-            5
-        </div>
-        <div class="nivel-seletor">
-            6
-        </div>
-        <div class="nivel-seletor">
-            7
-        </div>
-        <div class="nivel-seletor">
-            8
-        </div>
-        <div class="nivel-seletor">
-            9
         </div>
     </div>
     <div id="view-3d"></div>

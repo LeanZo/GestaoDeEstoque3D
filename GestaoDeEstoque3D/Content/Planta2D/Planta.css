@@ -364,6 +364,18 @@ a.leaflet-buttons-control-button {
         filter: brightness(0) saturate(100%) invert(52%) sepia(61%) saturate(6361%) hue-rotate(336deg) brightness(103%) contrast(99%);
     }
 
+.item-botao-desativado {
+    background: rgb(220 220 220 / 31%);
+    border: 1px solid #b1b1b121;
+    cursor: not-allowed;
+}
+
+    .item-botao-desativado > img {
+        filter: brightness(0) saturate(100%) grayscale(100%) invert(50%);
+        cursor: not-allowed;
+        opacity: 26%;
+    }
+
 .label-planta {
     background: none;
     border: none;

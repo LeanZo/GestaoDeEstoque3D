@@ -38,6 +38,7 @@ namespace GestaoDeEstoque3D.Controllers
                 Peso = est.Peso,
                 PesoMaximoEmpilhamento = est.PesoMaximoEmpilhamento,
                 CodigoDeBarras = est.CodigoDeBarras,
+                PossuiAssociacao = est.PossuiAssociacao,
             });
 
             var return_json = Json(response, JsonRequestBehavior.AllowGet);

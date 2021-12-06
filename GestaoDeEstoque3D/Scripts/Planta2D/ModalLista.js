@@ -2,6 +2,8 @@
     static Objetos = [];
 
     static Abrir() {
+        LimparRota();
+
         $('#modal-container').css('display', 'flex');
     }
 
@@ -105,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="item-footer">
-                                    <div class="item-botao">
+                                    <div class="item-botao ${result[i].Associado ? 'item-botao-desativado' : ''}" ${result[i].Associado ? '' : `onclick="CadEstante.AdicionarAoMapa(${result[i].Id})"`}>
                                         <img src="/Content/Icones/layers.svg" width="24" height="24">
                                     </div>
                                     <div class="item-botao" onclick="CadEstante.Abrir(${result[i].Id})">
@@ -212,10 +214,10 @@
                                     </div>
                                 </div>
                                 <div class="item-footer">
-                                    <div class="item-botao">
+                                    <div class="item-botao" onclick="CadItem.Estocar(${result[i].Id})">
                                         <img src="/Content/Icones/plus.svg" width="24" height="24">
                                     </div>
-                                    <div class="item-botao">
+                                    <div class="item-botao ${result[i].PossuiAssociacao ? '' : 'item-botao-desativado'}" ${result[i].PossuiAssociacao ? `onclick="CadItem.Retirar(${result[i].Id})"` : '' }>
                                         <img src="/Content/Icones/minus.svg" width="24" height="24">
                                     </div>
                                     <div class="item-botao" onclick="CadItem.Abrir(${result[i].Id})">

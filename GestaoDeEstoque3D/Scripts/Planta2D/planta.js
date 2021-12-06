@@ -4,6 +4,7 @@ var layerControl;
 var desenhandoPoligono = false;
 var poligonoSelecionado;
 var estantesAssociadas;
+var prateleiras;
 var dragStartId = 1;
 var dragEndId = 0;
 
@@ -42,12 +43,12 @@ function InicializarPlanta() {
 
     planta.pm.setGlobalOptions({ snappable: true, snapDistance: 20, snapMiddle: true });
 
-    var containers = [];
+    //var containers = [];
 
-    containers.push(CriarControlAdicionarEstante());
-    containers.push(CriarControlItensDeEstoque());
+    //containers.push(CriarControlAdicionarEstante());
+    //containers.push(CriarControlItensDeEstoque());
 
-    CriarToolbar(containers);
+    //CriarToolbar(containers);
 
     planta.on('click', function (e) {
         console.log(e);
@@ -118,10 +119,32 @@ function LimparRota() {
     estanteRota = null;
 }
 
-function ExibirRota(latLgnInicio, latLgnFim, estanteId) {
+function ExibirRota(latLgnInicio, latLgnFim, prateleiraId) {
     LimparRota();
 
-    var _estante = estantesAssociadas.find(i => i.Id == estanteId);
+    var prateleira = prateleiras.find(i => i.Id == prateleiraId);
+
+    var _estante = estantesAssociadas.find(i => i.Id == prateleira.EstanteId);
+
+    $('#select-nivel-prateleira').empty();
+
+    for (var i = 1; i <= _estante.QuantidadePrateleiras; i++) {
+        if (i == prateleira.Nivel)
+            $('#select-nivel-prateleira').append(`
+                        <div class="nivel-seletor nivel-seletor-ativo" data-value="${i}">
+                            ${i}
+                        </div>
+                    `);
+        else
+            $('#select-nivel-prateleira').append(`
+                        <div class="nivel-seletor" data-value="${i}">
+                            ${i}
+                        </div>
+                    `);
+    }
+
+    poligonoSelecionado = camadas["Estantes"].leafletLayer.getLayers().find(layer => layer.feature.properties.PoligonoId == _estante.PoligonoId);
+
     estanteRota = camadas["Estantes"].leafletLayer.getLayers().find(layer => layer.feature.properties.PoligonoId == _estante.PoligonoId);
 
     if (estanteRota != null)
@@ -151,6 +174,7 @@ function CarregarCamadas() {
         url: '/Planta2D/CarregarCamadas',
         success: function (response) {
             estantesAssociadas = response.estantesAssociadas;
+            prateleiras = response.prateleiras;
 
             var camadasGeojson = response.camadasGeojson;
 
@@ -207,15 +231,28 @@ function onEachFeature(feature, layer) {
 
         view3D.UnpackAllItemsInRender();
 
-        var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == e.target.feature.properties.PoligonoId && i.Nivel == 1);
+        var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == e.target.feature.properties.PoligonoId);
         if (estanteAssociada != null) {
             $('#select-nivel-prateleira').empty();
 
             for (var i = 1; i <= estanteAssociada.QuantidadePrateleiras; i++){
-                $('#select-nivel-prateleira').append(`<option value="${i}">${i}</option>`)
+                if(i == 1)
+                    $('#select-nivel-prateleira').append(`
+                        <div class="nivel-seletor nivel-seletor-ativo" data-value="${i}">
+                            ${i}
+                        </div>
+                    `);
+                else
+                    $('#select-nivel-prateleira').append(`
+                        <div class="nivel-seletor" data-value="${i}">
+                            ${i}
+                        </div>
+                    `);
             }
 
-            var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == estanteAssociada.Id);
+            var prateleira = prateleiras.find(i => i.EstanteId == estanteAssociada.Id && i.Nivel == 1);
+
+            var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == prateleira.Id);
 
             if (containerPackingResult != null) {
                 view3D.ShowPackingView(containerPackingResult);
@@ -419,15 +456,17 @@ function RemoverReferenciaEstante() {
     }
 }
 
-async function TrocarNivel(event) {
+async function TrocarNivel(nivel) {
     await PackContainers();
 
     view3D.UnpackAllItemsInRender();
 
-    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligonoSelecionado.feature.properties.PoligonoId && i.Nivel == $(event.target).val());
+    var estanteAssociada = estantesAssociadas.find(i => i.PoligonoId == poligonoSelecionado.feature.properties.PoligonoId);
 
     if (estanteAssociada != null) {
-        var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == estanteAssociada.Id);
+        var prateleira = prateleiras.find(i => i.EstanteId == estanteAssociada.Id && i.Nivel == nivel);
+
+        var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == prateleira.Id);
 
         if (containerPackingResult != null) {
             view3D.ShowPackingView(containerPackingResult);
@@ -436,5 +475,9 @@ async function TrocarNivel(event) {
     }
 }
 
-//$('#select-nivel-prateleira').on('change', async function () {
-//});
+$(document).on('click', '.nivel-seletor', function (e) {
+    $('.nivel-seletor').removeClass('nivel-seletor-ativo');
+    $(this).addClass('nivel-seletor-ativo');
+
+    TrocarNivel($(this).data('value'));
+});

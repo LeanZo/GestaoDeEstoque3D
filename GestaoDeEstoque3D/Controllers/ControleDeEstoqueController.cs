@@ -23,25 +23,28 @@ namespace GestaoDeEstoque3D.Controllers
             estantes.OrderBy(e => e.Id).ToList().ForEach(estante =>
             {
                 var items = new List<OnlineContainerPacking.Models.Item>();
-                estante.ItemsEstoque.OrderByDescending(i => i.PackY).ToList().ForEach(itemEstoque => {
-                    var TipoItemEstoque = itemEstoque.TipoItemEstoque;
-                    var _itemContainerPacking = new OnlineContainerPacking.Models.Item(itemEstoque.Id, Convert.ToDecimal(TipoItemEstoque.Largura), Convert.ToDecimal(TipoItemEstoque.Altura), Convert.ToDecimal(TipoItemEstoque.Profundidade), Convert.ToDecimal(itemEstoque.PackX), Convert.ToDecimal(itemEstoque.PackY), Convert.ToDecimal(itemEstoque.PackZ), 1, TipoItemEstoque.Id, itemEstoque.ItemBaseId);
+                estante.Prateleiras.OrderBy(p => p.Nivel).ToList().ForEach(prateleira =>
+                {
+                    prateleira.ItemsEstoque.OrderByDescending(i => i.PackY).ToList().ForEach(itemEstoque => {
+                        var TipoItemEstoque = itemEstoque.TipoItemEstoque;
+                        var _itemContainerPacking = new OnlineContainerPacking.Models.Item(itemEstoque.Id, Convert.ToDecimal(TipoItemEstoque.Largura), Convert.ToDecimal(TipoItemEstoque.Altura), Convert.ToDecimal(TipoItemEstoque.Profundidade), Convert.ToDecimal(itemEstoque.PackX), Convert.ToDecimal(itemEstoque.PackY), Convert.ToDecimal(itemEstoque.PackZ), 1, TipoItemEstoque.Id, itemEstoque.ItemBaseId);
 
-                    if (itemEstoque.PackY == 0) //É um item base
-                    {
-                        _itemContainerPacking.ItensEmpilhados = items.Where(i => i.ItemBaseId == _itemContainerPacking.ID).OrderBy(i => i.CoordY).ToList();
-
-                        if (Convert.ToDecimal(estante.AlturaPrateleiras) < _itemContainerPacking.Dim2 * (_itemContainerPacking.ItensEmpilhados.Count + 2))
+                        if (itemEstoque.PackY == 0) //É um item base
                         {
-                            _itemContainerPacking.EmpilhamentoDisponivel = false;
+                            _itemContainerPacking.ItensEmpilhados = items.Where(i => i.ItemBaseId == _itemContainerPacking.ID).OrderBy(i => i.CoordY).ToList();
+
+                            if (Convert.ToDecimal(estante.AlturaPrateleiras) < _itemContainerPacking.Dim2 * (_itemContainerPacking.ItensEmpilhados.Count + 2))
+                            {
+                                _itemContainerPacking.EmpilhamentoDisponivel = false;
+                            }
                         }
-                    }
 
-                    _itemContainerPacking.IsPacked = true;
-                    items.Add(_itemContainerPacking);
+                        _itemContainerPacking.IsPacked = true;
+                        items.Add(_itemContainerPacking);
+                    });
+                    
+                    containers.Add(new OnlineContainerPacking.Models.Container(prateleira.Id, Convert.ToDecimal(estante.ProfundidadePrateleiras), Convert.ToDecimal(estante.LarguraPrateleiras), Convert.ToDecimal(estante.AlturaPrateleiras), items));
                 });
-
-                containers.Add(new OnlineContainerPacking.Models.Container(estante.Id, Convert.ToDecimal(estante.ProfundidadePrateleiras), Convert.ToDecimal(estante.LarguraPrateleiras), Convert.ToDecimal(estante.AlturaPrateleiras), items));
             });
             //=====================================================
 
@@ -61,7 +64,7 @@ namespace GestaoDeEstoque3D.Controllers
                 var itemEstoque = new ItemEstoque()
                 {
                     ItemBaseId = novoItem.ItemBaseId,
-                    EstanteId = novoItem.ContainerId,
+                    PrateleiraId = novoItem.ContainerId,
                     PackX = Convert.ToDouble(novoItem.CoordX),
                     PackY = Convert.ToDouble(novoItem.CoordY),
                     PackZ = Convert.ToDouble(novoItem.CoordZ),
@@ -80,7 +83,7 @@ namespace GestaoDeEstoque3D.Controllers
             var response = new
             {
                 NovoItemId = novoItemEstoque == null ? -1 : novoItemEstoque.Id,
-                EstanteId = novoItemEstoque == null ? -1 : novoItemEstoque.EstanteId
+                PrateleiraId = novoItemEstoque == null ? -1 : novoItemEstoque.PrateleiraId
             };
 
             return Json(response);
@@ -91,15 +94,15 @@ namespace GestaoDeEstoque3D.Controllers
             var itemEstoqueCore = new ItemEstoqueCore();
 
             var itemEstoque = itemEstoqueCore.RetornarUltimoAssociadoPorTipoId(TipoItemEstoqueId);
-            var estanteId = itemEstoque.EstanteId;
+            var prateleiraId = itemEstoque.PrateleiraId;
 
-            itemEstoque.EstanteId = null;
+            itemEstoque.PrateleiraId = null;
             itemEstoqueCore.Alterar(itemEstoque);
 
             var response = new
             {
                 ItemId = itemEstoque.Id,
-                EstanteId = estanteId ?? -1
+                PrateleiraId = prateleiraId ?? -1
             };
 
             return Json(response);

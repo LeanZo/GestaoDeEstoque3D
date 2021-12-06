@@ -112,4 +112,20 @@
             });
         }
     }
+
+    static AdicionarAoMapa(id) {
+    $.ajax({
+        type: "POST",
+        url: "/Estante/AdicionarEstanteAoMapa",
+        data: { EstanteId: id },
+        success: function (result) {
+            CarregarCamadas();
+
+            ModalLista.Fechar();
+        },
+        error: function (req, status, error) {
+            console.log("Erro.");
+        }
+    });
+}
 }
