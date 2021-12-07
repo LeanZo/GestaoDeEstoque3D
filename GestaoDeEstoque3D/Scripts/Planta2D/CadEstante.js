@@ -48,8 +48,12 @@
             type: "POST",
             url: "/Estante/CadastrarEstante",
             data: parametrosAjax,
-            success: function (result) {
+            success: async function (result) {
                 ModalLista.Estantes.Carregar(() => { ModalLista.Filtrar(); });
+
+                CarregarCamadas();
+                await PackContainers();
+
                 CadEstante.Fechar();
             },
             error: function (req, status, error) {
@@ -73,8 +77,10 @@
             type: "POST",
             url: "/Estante/EditarEstante",
             data: parametrosAjax,
-            success: function (result) {
+            success: async function (result) {
                 ModalLista.Estantes.Carregar(() => { ModalLista.Filtrar(); });
+                CarregarCamadas();
+                await PackContainers();
                 CadEstante.Fechar();
             },
             error: function (req, status, error) {
@@ -100,8 +106,12 @@
                 type: "POST",
                 url: "/Estante/DeletarEstante",
                 data: parametrosAjax,
-                success: function (result) {
+                success: async function (result) {
                     ModalLista.Estantes.Carregar(() => { ModalLista.Filtrar(); });
+
+                    CarregarCamadas();
+                    await PackContainers();
+
                     CadEstante.Deletar.Fechar();
 
                     $('#deletar-estante-id').val('');

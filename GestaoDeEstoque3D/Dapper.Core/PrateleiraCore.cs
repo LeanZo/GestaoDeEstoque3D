@@ -25,5 +25,20 @@ namespace GestaoDeEstoque3D.Dapper.Core
 
             return Prateleira;
         }
+
+        public List<Prateleira> RetornarPorEstanteId(int estanteId)
+        {
+            List<Prateleira> Prateleiras = new List<Prateleira>();
+            using (var connection = DapperConnection.Create())
+            {
+                Prateleiras = connection.Query<Prateleira>(
+                    @"select * from tbl_prateleira pra
+                      where pra_est_id = @estanteId",
+                    param: new { estanteId }
+                ).ToList();
+            }
+
+            return Prateleiras;
+        }
     }
 }

@@ -22,9 +22,9 @@ namespace GestaoDeEstoque3D.Controllers
             var containers = new List<OnlineContainerPacking.Models.Container>();
             estantes.OrderBy(e => e.Id).ToList().ForEach(estante =>
             {
-                var items = new List<OnlineContainerPacking.Models.Item>();
                 estante.Prateleiras.OrderBy(p => p.Nivel).ToList().ForEach(prateleira =>
                 {
+                    var items = new List<OnlineContainerPacking.Models.Item>();
                     prateleira.ItemsEstoque.OrderByDescending(i => i.PackY).ToList().ForEach(itemEstoque => {
                         var TipoItemEstoque = itemEstoque.TipoItemEstoque;
                         var _itemContainerPacking = new OnlineContainerPacking.Models.Item(itemEstoque.Id, Convert.ToDecimal(TipoItemEstoque.Largura), Convert.ToDecimal(TipoItemEstoque.Altura), Convert.ToDecimal(TipoItemEstoque.Profundidade), Convert.ToDecimal(itemEstoque.PackX), Convert.ToDecimal(itemEstoque.PackY), Convert.ToDecimal(itemEstoque.PackZ), 1, TipoItemEstoque.Id, itemEstoque.ItemBaseId);

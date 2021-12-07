@@ -97,6 +97,19 @@ namespace GestaoDeEstoque3D.Controllers
 
             new EstanteCore().Inserir(estante);
 
+            var prateleiraCore = new PrateleiraCore();
+
+            for (var i = 1; i <= estante.QuantidadePrateleiras; i++)
+            {
+                var prateleira = new Prateleira
+                {
+                    Nivel = i,
+                    EstanteId = estante.Id
+                };
+
+                prateleiraCore.Inserir(prateleira);
+            }
+
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
@@ -120,6 +133,7 @@ namespace GestaoDeEstoque3D.Controllers
             
             var larguraAnterior = estante.LarguraPrateleiras;
             var profundidadeAnterior = estante.ProfundidadePrateleiras;
+            var quantidadePrateleirasAnterior = estante.QuantidadePrateleiras;
 
             estante.QuantidadePrateleiras = jsonEstante.QtdPrateleiras;
             estante.LarguraPrateleiras = Convert.ToDouble(jsonEstante.LarguraPrat.Replace(',', '.'), CultureInfo.GetCultureInfo("en-US"));
@@ -140,6 +154,44 @@ namespace GestaoDeEstoque3D.Controllers
                 poligono.Geojson = GerarGeoJsonEstanteAtualizado(poligono.Geojson, larguraAnterior ?? 0, estante.LarguraPrateleiras ?? 0, profundidadeAnterior ?? 0, estante.ProfundidadePrateleiras ?? 0);
 
                 poligonoCore.Alterar(poligono);
+            }
+
+            if(quantidadePrateleirasAnterior != estante.QuantidadePrateleiras)
+            {
+                var prateleiraCore = new PrateleiraCore();
+
+                if (estante.QuantidadePrateleiras > quantidadePrateleirasAnterior)
+                {
+                    for (var i = (quantidadePrateleirasAnterior ?? 0) + 1; i <= estante.QuantidadePrateleiras; i++)
+                    {
+                        var prateleira = new Prateleira
+                        {
+                            Nivel = i,
+                            EstanteId = estante.Id
+                        };
+
+                        prateleiraCore.Inserir(prateleira);
+                    }
+                } 
+                else
+                {
+                    var itemEstoqueCore = new ItemEstoqueCore();
+
+                    var prateleirasRemover = prateleiraCore.RetornarPorEstanteId(estante.Id).Where(pra => pra.Nivel > estante.QuantidadePrateleiras).ToList();
+
+                    prateleirasRemover.ForEach(pra =>
+                    {
+                        var itens = itemEstoqueCore.RetornarPorPrateleiraId(pra.Id);
+
+                        itens.ForEach(ite =>
+                        {
+                            ite.PrateleiraId = null;
+                            itemEstoqueCore.Alterar(ite);
+                        });
+
+                        prateleiraCore.Deletar(pra);
+                    });
+                }
             }
 
             return Json("", JsonRequestBehavior.AllowGet);
