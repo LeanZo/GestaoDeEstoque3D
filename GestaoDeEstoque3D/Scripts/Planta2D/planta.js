@@ -53,6 +53,10 @@ function InicializarPlanta() {
     planta.on('click', function (e) {
         console.log(e);
 
+        if (Ancoragem.DefinindoAncoragem === true) {
+            Ancoragem.DefinirPonto(e.latlng, () => { Ancoragem.Finalizar() });
+        }
+
         //if (!desenhandoPoligono) {
         //    if (startRota == null) {
         //        startRota = L.marker(e.latlng).addTo(planta);
@@ -222,6 +226,13 @@ function AdicionarCamadas() {
 }
 
 function onEachFeature(feature, layer) {
+    layer.on('contextmenu', function (e) {
+        Ancoragem.EstanteAncoragem = e.target;
+        layer.bindPopup(`
+            <button class="opcao-context-menu" onclick="Ancoragem.Iniciar()">Definir ponto de ancoragem</button>
+        `).openPopup().unbindPopup();
+    });
+
     layer.on('click', async function (e) {
         await PackContainers();
 
@@ -368,6 +379,9 @@ function SalvarPoligono(poligono, camadaId, camadaNome) {
         success: function (result) {
             poligono.feature.properties.PoligonoId = result;
             poligono.setStyle({ color: camadas[camadaNome].propriedades.CamadaCor })
+
+            if (camadaNome == "Corredores")
+                Gestao.Rota.Inicializar(camadas["Corredores"].geojson);
         },
         error: function (req, status, error) {
             console.log("Erro.");
@@ -383,6 +397,9 @@ function DeletarPoligono(poligono) {
         data: parametrosAjax,
         success: function (result) {
             camadas[poligono.feature.properties.CamadaNome].leafletLayer.removeLayer(poligono)
+
+            if (poligono.feature.properties.CamadaNome == "Corredores")
+                Gestao.Rota.Inicializar(camadas["Corredores"].geojson);
         },
         error: function (req, status, error) {
             console.log("Erro.");

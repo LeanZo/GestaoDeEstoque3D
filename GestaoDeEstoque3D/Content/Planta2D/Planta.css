@@ -443,3 +443,53 @@ a.leaflet-buttons-control-button {
         font-weight: 600;
         font-family: Poppins;
     }*/
+
+.opcao-context-menu {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 13px;
+    border: 2px solid #46AAFE;
+    border-radius: 10px;
+    width: 160px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #46AAFE !important;
+    padding: 0px;
+    background: white;
+}
+
+.snackbar {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 13px;
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+}
+
+.snackbar-button {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 13px;
+    border: 1px solid #46AAFE;
+    border-radius: 10px;
+    height: 30px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #46AAFE !important;
+    background: #333333;
+    margin-left: 10px;
+}

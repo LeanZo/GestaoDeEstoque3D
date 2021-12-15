@@ -267,6 +267,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bundle\main.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
+    <Content Include="Scripts\Planta2D\Ancoragem.js" />
     <Content Include="Scripts\Planta2D\CadEstante.js" />
     <Content Include="Scripts\Planta2D\CadItem.js" />
     <Content Include="Scripts\Planta2D\ItensDeEstoque.js" />

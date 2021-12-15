@@ -27,7 +27,7 @@ namespace GestaoDeEstoque3D.Dapper.Map
                 .ToColumn("est_prateleira_profundidade");
 
             Map(p => p.PesoMaximoPrateleiras)
-                .ToColumn("est_prateleira_peso_maxixo");
+                .ToColumn("est_prateleira_peso_maximo");
 
             Map(p => p.PoligonoId)
                 .ToColumn("est_pol_id");

@@ -252,5 +252,18 @@ namespace GestaoDeEstoque3D.Controllers
 
             return JsonConvert.SerializeObject(geojsonObjeto);
         }
+        public JsonResult DefinirPontoDeAncoragem(int EstanteId, float Lat, float Lng)
+        {
+            var core = new EstanteCore();
+
+            var estante = core.RetornarPorId(EstanteId);
+
+            estante.AncoragemLat = Lat;
+            estante.AncoragemLng = Lng;
+
+            core.Alterar(estante);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
     }
 }
