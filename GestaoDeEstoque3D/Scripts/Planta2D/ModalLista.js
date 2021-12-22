@@ -57,13 +57,12 @@
 
             $.ajax({
                 type: "POST",
+                type: "POST",
                 url: "/Estante/RetornarEstantes",
                 success: function (result) {
                     ModalLista.Objetos = result;
 
                     for (var i in result) {
-                        result[i]
-
                         $('#modal-lista-corpo').append(`
                             <div class="modal-item-container" data-id="${result[i].Id}">
                                 <div class="item-header">
@@ -109,6 +108,9 @@
                                 <div class="item-footer">
                                     <div class="item-botao ${result[i].Associado ? 'item-botao-desativado' : ''}" ${result[i].Associado ? '' : `onclick="CadEstante.AdicionarAoMapa(${result[i].Id})"`}>
                                         <img src="/Content/Icones/layers.svg" width="24" height="24">
+                                    </div>
+                                    <div class="item-botao" onclick="AssociadosEstante.Abrir(${result[i].Id})">
+                                        <img src="/Content/Icones/archive.svg" width="24" height="24">
                                     </div>
                                     <div class="item-botao" onclick="CadEstante.Abrir(${result[i].Id})">
                                         <img src="/Content/Icones/edit.svg" width="24" height="24">
@@ -156,8 +158,6 @@
                     ModalLista.Objetos = result;
 
                     for (var i in result) {
-                        result[i]
-
                         $('#modal-lista-corpo').append(`
                             <div class="modal-item-container" data-id="${result[i].Id}">
                                 <div class="item-header">

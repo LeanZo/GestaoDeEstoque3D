@@ -205,6 +205,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Icones\archive.svg" />
     <Content Include="Content\Icones\checkmark.svg" />
     <Content Include="Content\Icones\close.svg" />
     <Content Include="Content\Icones\edit.svg" />
@@ -266,6 +267,7 @@
     <Content Include="Libraries\three\three-min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bundle\main.js" />
+    <Content Include="Scripts\Estante\associados-estante.js" />
     <Content Include="Scripts\Planta2D.Controls\itens-de-estoque.js" />
     <Content Include="Scripts\Planta2D\Ancoragem.js" />
     <Content Include="Scripts\Planta2D\CadEstante.js" />

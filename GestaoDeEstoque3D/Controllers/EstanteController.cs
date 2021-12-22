@@ -18,6 +18,33 @@ namespace GestaoDeEstoque3D.Controllers
             return View();
         }
 
+        public JsonResult RetornarAssociados(int EstanteId)
+        {
+            var estante = new EstanteCore().RetornarComItens(1, EstanteId);
+
+            var response = estante.Prateleiras.Select(pra => new
+            {
+                Id = pra.Id,
+                Nivel = pra.Nivel,
+                Itens = pra.ItemsEstoque.GroupBy(ite => ite.TipoItemEstoqueId).Select(ite => ite.First()).Select(ite => new { 
+                    Id = ite.Id,
+                    Nome = ite.TipoItemEstoque.Nome,
+                    Descricao = ite.TipoItemEstoque.Descricao,
+                    Largura = ite.TipoItemEstoque.Largura,
+                    Altura = ite.TipoItemEstoque.Altura,
+                    Profundidade = ite.TipoItemEstoque.Profundidade,
+                    Peso = ite.TipoItemEstoque.Peso,
+                    PesoMaximoEmpilhamento = ite.TipoItemEstoque.PesoMaximoEmpilhamento,
+                    CodigoDeBarras = ite.TipoItemEstoque.CodigoDeBarras,
+                    Quantidade = pra.ItemsEstoque.Where(ite2 => ite2.TipoItemEstoqueId == ite.TipoItemEstoqueId).Count(),
+                })
+            });
+
+            var return_json = Json(response, JsonRequestBehavior.AllowGet);
+            return_json.MaxJsonLength = int.MaxValue;
+            return return_json;
+        }
+
         public JsonResult RetornarEstantes()
         {
             var estantes = new EstanteCore().RetornarTodos();

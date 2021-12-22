@@ -27,18 +27,18 @@ namespace GestaoDeEstoque3D.Controllers
             else
                 tiposItemEstoque = new TipoItemEstoqueCore().RetornarTodos();
 
-            var response = tiposItemEstoque.Select(est => new
+            var response = tiposItemEstoque.Select(tpi => new
             {
-                Id = est.Id,
-                Nome = est.Nome,
-                Descricao = est.Descricao,
-                Largura = est.Largura,
-                Altura = est.Altura,
-                Profundidade = est.Profundidade,
-                Peso = est.Peso,
-                PesoMaximoEmpilhamento = est.PesoMaximoEmpilhamento,
-                CodigoDeBarras = est.CodigoDeBarras,
-                PossuiAssociacao = est.PossuiAssociacao,
+                Id = tpi.Id,
+                Nome = tpi.Nome,
+                Descricao = tpi.Descricao,
+                Largura = tpi.Largura,
+                Altura = tpi.Altura,
+                Profundidade = tpi.Profundidade,
+                Peso = tpi.Peso,
+                PesoMaximoEmpilhamento = tpi.PesoMaximoEmpilhamento,
+                CodigoDeBarras = tpi.CodigoDeBarras,
+                PossuiAssociacao = tpi.PossuiAssociacao,
             });
 
             var return_json = Json(response, JsonRequestBehavior.AllowGet);

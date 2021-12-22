@@ -45,6 +45,19 @@
             <div id="itens-de-estoque-button" class="acoes-crud" style="width: 184px" onclick="ModalLista.ItensDeEstoque.Abrir()"><img src="~/Content/Icones/inbox.svg" width="24" height="24">Itens de Estoque</div>
         </div>
 
+        @*MODAL DE ITENS ASSOCIADOS NA ESTANTE*@
+        <div id="modal-associados-estante" class="modal-container" style="display: none">
+            <div class="item-botao item-botao-deletar modal-close" onclick="AssociadosEstante.Fechar()">
+                <img src="/Content/Icones/close.svg" width="24" height="24">
+            </div>
+            <div class="modal-inner-container">
+                <div class="modal-lista-header">
+                    <input id="modal-pesquisa-associados" type="text" class="modal-input" oninput="AssociadosEstante.Filtrar()" />
+                </div>
+                <div id="modal-lista-associados-corpo" class="modal-lista-corpo"></div>
+            </div>
+        </div>
+
         @*MODAL DE CADASTRO DE ESTANTES*@
         <div id="modal-cadastro-estante" class="modal-container modal-cadastro-container" style="display: none">
             <div class="modal-cadastro-inner-container">
@@ -342,3 +355,4 @@
 <script src="~/Scripts/Planta2D/CadEstante.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D/CadItem.js?v=@ViewBag.Versao"></script>
 <script src="~/Scripts/Planta2D/Ancoragem.js?v=@ViewBag.Versao"></script>
+<script src="~/Scripts/Estante/associados-estante.js?v=@ViewBag.Versao"></script>
