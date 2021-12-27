@@ -56,6 +56,28 @@ namespace GestaoDeEstoque3D.Dapper.Core
 
             return ItemEstoque;
         }
+        
+        public List<ItemEstoque> RetornarNaoEstocados()
+        {
+            List<ItemEstoque> ItemEstoque;
+            using (var connection = DapperConnection.Create())
+            {
+                ItemEstoque = connection.Query<ItemEstoque, TipoItemEstoque, ItemEstoque>(
+                    @"select * from tbl_item_estoque ite
+                      inner join tbl_tipo_item_estoque tie on tie_id = ite_tie_id
+                      where ite_ativo is true and ite_pra_id is null",
+                    (ITE, TIE) =>
+                    {
+                        ITE.TipoItemEstoque = TIE;
+
+                        return ITE;
+                    },
+                    splitOn: "ite_id, tie_id"
+                ).ToList();
+            }
+
+            return ItemEstoque;
+        }
 
         public List<ItemEstoque> RetornarPorPrateleiraId(int prateleiraId)
         {

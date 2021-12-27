@@ -230,20 +230,38 @@ namespace GestaoDeEstoque3D.Controllers
 
             var estante = core.RetornarPorId(EstanteId);
 
-            estante.Ativo = false;
+            //Deleta prateleiras e remove a referencia dos itens associados
+            var prateleiraCore = new PrateleiraCore();
+            var itemEstoqueCore = new ItemEstoqueCore();
 
-            core.Alterar(estante);
-            
+            var prateleirasRemover = prateleiraCore.RetornarPorEstanteId(estante.Id);
+
+            prateleirasRemover.ForEach(pra =>
+            {
+                var itens = itemEstoqueCore.RetornarPorPrateleiraId(pra.Id);
+
+                itens.ForEach(ite =>
+                {
+                    ite.PrateleiraId = null;
+                    itemEstoqueCore.Alterar(ite);
+                });
+
+                prateleiraCore.Deletar(pra);
+            });
+
+            //Deleta a estante
+            core.Deletar(estante);
+
+            //Deleta poligono
             if (estante.PoligonoId != null)
             {
                 var poligonoCore = new PoligonoCore();
 
                 var poligono = poligonoCore.RetornarPorId(estante.PoligonoId ?? 0);
                 
-                poligono.Ativo = false;
-                
-                poligonoCore.Alterar(poligono);
+                poligonoCore.Deletar(poligono);
             }
+
 
             return Json("", JsonRequestBehavior.AllowGet);
         }

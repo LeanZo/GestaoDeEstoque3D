@@ -132,5 +132,39 @@ namespace GestaoDeEstoque3D.Controllers
             
             return Json("", JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult DeletarItem(int ItemEstoqueId)
+        {
+            var core = new ItemEstoqueCore();
+
+            var ItemEstoque = core.RetornarPorId(ItemEstoqueId);
+
+            core.Deletar(ItemEstoque);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RetornarNaoEstocados()
+        {
+            var itensDeEstoque = new ItemEstoqueCore().RetornarNaoEstocados();
+
+            var response = itensDeEstoque.GroupBy(ite => ite.TipoItemEstoqueId).Select(ite => ite.First()).Select(ite => new {
+                Id = ite.Id,
+                TipoItemEstoqueId = ite.TipoItemEstoqueId,
+                Nome = ite.TipoItemEstoque.Nome,
+                Descricao = ite.TipoItemEstoque.Descricao,
+                Largura = ite.TipoItemEstoque.Largura,
+                Altura = ite.TipoItemEstoque.Altura,
+                Profundidade = ite.TipoItemEstoque.Profundidade,
+                Peso = ite.TipoItemEstoque.Peso,
+                PesoMaximoEmpilhamento = ite.TipoItemEstoque.PesoMaximoEmpilhamento,
+                CodigoDeBarras = ite.TipoItemEstoque.CodigoDeBarras,
+                Quantidade = itensDeEstoque.Where(ite2 => ite2.TipoItemEstoqueId == ite.TipoItemEstoqueId).Count(),
+            });
+
+            var return_json = Json(response, JsonRequestBehavior.AllowGet);
+            return_json.MaxJsonLength = int.MaxValue;
+            return return_json;
+        }
     }
 }

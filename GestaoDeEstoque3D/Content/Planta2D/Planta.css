@@ -498,7 +498,20 @@ a.leaflet-buttons-control-button {
     z-index: 1150;
 }
 
+#modal-nao-estocados {
+    z-index: 1150;
+}
+
 #modal-pesquisa-associados {
+    background-image: url(/Content/Icones/search.svg);
+    background-size: 28px;
+    background-repeat: no-repeat;
+    background-position: 8px;
+    text-indent: 42px;
+    transition: 0.3s;
+}
+
+#modal-pesquisa-nao-estocados {
     background-image: url(/Content/Icones/search.svg);
     background-size: 28px;
     background-repeat: no-repeat;

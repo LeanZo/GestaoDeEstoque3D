@@ -13,6 +13,7 @@
         $('#modal-pesquisa').val('');
 
         $('#modal-button-cadastrar-estante').css('display', 'none');
+        $('#modal-button-nao-estocados').css('display', 'none');
         $('#modal-button-cadastrar-item').css('display', 'none');
 
         $('#estantes-button').removeClass('acoes-crud-selecionado');
@@ -44,6 +45,7 @@
             ModalLista.Filtrar();
 
             $('#modal-button-cadastrar-estante').css('display', 'block');
+            $('#modal-button-nao-estocados').css('display', 'none');
             $('#modal-button-cadastrar-item').css('display', 'none');
 
             $('#estantes-button').addClass('acoes-crud-selecionado');
@@ -140,6 +142,7 @@
             ModalLista.Filtrar();
 
             $('#modal-button-cadastrar-estante').css('display', 'none');
+            $('#modal-button-nao-estocados').css('display', 'block');
             $('#modal-button-cadastrar-item').css('display', 'block');
 
             $('#estantes-button').removeClass('acoes-crud-selecionado');

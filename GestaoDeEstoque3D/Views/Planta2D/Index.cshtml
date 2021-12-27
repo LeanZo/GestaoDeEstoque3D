@@ -34,6 +34,7 @@
                 <div class="modal-lista-header">
                     <input id="modal-pesquisa" type="text" class="modal-input" oninput="ModalLista.Filtrar()" />
                     <button id="modal-button-cadastrar-estante" class="modal-button" onclick="CadEstante.Abrir()" style="display: none">+ Cadastrar Estante</button>
+                    <button id="modal-button-nao-estocados" class="modal-button" onclick="CadItem.NaoEstocados.Abrir()" style="display: none; margin-right: calc(-100% + 875px);">Itens não estocados</button>
                     <button id="modal-button-cadastrar-item" class="modal-button" onclick="CadItem.Abrir()" style="display: none">+ Cadastrar Item</button>
                 </div>
                 <div id="modal-lista-corpo" class="modal-lista-corpo"></div>
@@ -43,6 +44,44 @@
         <div class="acoes-crud-container">
             <div id="estantes-button" class="acoes-crud" style="width: 120px" onclick="ModalLista.Estantes.Abrir()"><img src="~/Content/Icones/menu.svg" width="24" height="24">Estantes</div>
             <div id="itens-de-estoque-button" class="acoes-crud" style="width: 184px" onclick="ModalLista.ItensDeEstoque.Abrir()"><img src="~/Content/Icones/inbox.svg" width="24" height="24">Itens de Estoque</div>
+        </div>
+
+        @*MODAL DE ITENS NÃO ESTOCADOS*@
+        <div id="modal-nao-estocados" class="modal-container" style="display: none">
+            <div class="item-botao item-botao-deletar modal-close" onclick="CadItem.NaoEstocados.Fechar()">
+                <img src="/Content/Icones/close.svg" width="24" height="24">
+            </div>
+            <div class="modal-inner-container">
+                <div class="modal-lista-header">
+                    <input id="modal-pesquisa-nao-estocados" type="text" class="modal-input" oninput="CadItem.NaoEstocados.Filtrar()" />
+                </div>
+                <div id="modal-lista-nao-estocados-corpo" class="modal-lista-corpo"></div>
+            </div>
+        </div>
+
+        @*MODAL DE DELETAR ITENS NÃO ESTOCADOS*@
+        <div id="modal-deletar-item-nao-estocado" class="modal-container modal-cadastro-container" style="display: none; z-index: 1200;">
+            <div class="modal-cadastro-inner-container">
+                <div class="modal-cadastro-header">
+                    <span>Deletar Item de Estoque</span>
+                </div>
+                <div class="modal-cadastro-corpo">
+                    <div>
+                        <span>
+                            Tem certeza que deseja deletar este item de estoque?
+                        </span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="modal-cadastro-footer">
+                    <div class="item-botao" onclick="CadItem.NaoEstocados.DeletarItem.Finalizar()">
+                        <img src="/Content/Icones/checkmark.svg" width="24" height="24">
+                    </div>
+                    <div class="item-botao item-botao-deletar" onclick="CadItem.NaoEstocados.DeletarItem.Fechar()">
+                        <img src="/Content/Icones/close.svg" width="24" height="24">
+                    </div>
+                </div>
+            </div>
         </div>
 
         @*MODAL DE ITENS ASSOCIADOS NA ESTANTE*@
@@ -62,7 +101,8 @@
         <div id="modal-cadastro-estante" class="modal-container modal-cadastro-container" style="display: none">
             <div class="modal-cadastro-inner-container">
                 <div class="modal-cadastro-header">
-                    <span>Cadastrar Estante</span>
+                    <span id="cad-estante-header">Cadastrar Estante</span>
+                    <span id="edit-estante-header">Editar Estante</span>
                 </div>
                 <div class="modal-cadastro-corpo">
                     <input id="cad-estante-id" type="text" style="display: none" />
@@ -72,6 +112,12 @@
                             de Pratileiras
                         </span>
                         <span><input id="cad-estante-quant-prateleiras" type="text" class="modal-cadastro-input" /></span>
+                    </div>
+                    <div id="aviso-edit-estante">
+                        <span>
+                            Ao diminuir a quant. de prateleiras, qualquer item estocado irá para a seção de itens não estocados.
+                        </span>
+                        <span></span>
                     </div>
                     <hr>
                     <div>
@@ -123,7 +169,7 @@
                     <input id="deletar-estante-id" type="text" style="display: none" />
                     <div>
                         <span>
-                            Tem certeza que deseja deletar esta estante?
+                            Tem certeza que deseja deletar esta estante? Qualquer item estocado irá para a seção de itens não estocados.
                         </span>
                         <span></span>
                     </div>
@@ -143,7 +189,8 @@
         <div id="modal-cadastro-item" class="modal-container modal-cadastro-container" style="display: none">
             <div class="modal-cadastro-inner-container">
                 <div class="modal-cadastro-header">
-                    <span>Cadastrar Item de Estoque</span>
+                    <span id="cad-item-header">Cadastrar Item de Estoque</span>
+                    <span id="edit-item-header">Editar Item de Estoque</span>
                 </div>
                 <div class="modal-cadastro-corpo">
                     <input id="cad-item-id" type="text" style="display: none" />
@@ -220,13 +267,13 @@
         <div id="modal-deletar-item" class="modal-container modal-cadastro-container" style="display: none">
             <div class="modal-cadastro-inner-container">
                 <div class="modal-cadastro-header">
-                    <span>Deletar Item de Estoque</span>
+                    <span>Deletar Tipo de Item de Estoque</span>
                 </div>
                 <div class="modal-cadastro-corpo">
                     <input id="deletar-item-id" type="text" style="display: none" />
                     <div>
                         <span>
-                            Tem certeza que deseja deletar este item de estoque?
+                            Tem certeza que deseja deletar este tipo de item de estoque?
                         </span>
                         <span></span>
                     </div>

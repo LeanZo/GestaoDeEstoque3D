@@ -12,7 +12,7 @@ namespace GestaoDeEstoque3D.Controllers
     public class ControleDeEstoqueController : Controller
     {
         // GET: ControleDeEstoque
-        public JsonResult EstocarNovoItem(int TipoItemEstoqueId)
+        public JsonResult EstocarItem(int TipoItemEstoqueId, int? ItemEstoqueId = null)
         {
             //===Carrega containers/estantes=====================
             var estanteCore = new EstanteCore();
@@ -61,22 +61,43 @@ namespace GestaoDeEstoque3D.Controllers
             {
             //Parallel.ForEach(itemsToPack.Where(i => i.IsPacked).ToList(), i =>
             //{
-                var itemEstoque = new ItemEstoque()
+                if(ItemEstoqueId == null)
                 {
-                    ItemBaseId = novoItem.ItemBaseId,
-                    PrateleiraId = novoItem.ContainerId,
-                    PackX = Convert.ToDouble(novoItem.CoordX),
-                    PackY = Convert.ToDouble(novoItem.CoordY),
-                    PackZ = Convert.ToDouble(novoItem.CoordZ),
-                    TipoItemEstoqueId = novoItem.TipoDeItemId,
-                    DataHora = DateTime.Now,
-                    UsuarioId = null,
-                    Ativo = true
-                };
+                    var itemEstoque = new ItemEstoque()
+                    {
+                        ItemBaseId = novoItem.ItemBaseId,
+                        PrateleiraId = novoItem.ContainerId,
+                        PackX = Convert.ToDouble(novoItem.CoordX),
+                        PackY = Convert.ToDouble(novoItem.CoordY),
+                        PackZ = Convert.ToDouble(novoItem.CoordZ),
+                        TipoItemEstoqueId = novoItem.TipoDeItemId,
+                        DataHora = DateTime.Now,
+                        UsuarioId = null,
+                        Ativo = true
+                    };
 
-                itemEstoqueCore.Inserir(itemEstoque);
+                    itemEstoqueCore.Inserir(itemEstoque);
 
-                novoItemEstoque = itemEstoque;
+                    novoItemEstoque = itemEstoque;
+                } 
+                else
+                {
+                    var itemEstoque = itemEstoqueCore.RetornarPorId(ItemEstoqueId ?? -1);
+
+                    itemEstoque.ItemBaseId = novoItem.ItemBaseId;
+                    itemEstoque.PrateleiraId = novoItem.ContainerId;
+                    itemEstoque.PackX = Convert.ToDouble(novoItem.CoordX);
+                    itemEstoque.PackY = Convert.ToDouble(novoItem.CoordY);
+                    itemEstoque.PackZ = Convert.ToDouble(novoItem.CoordZ);
+                    itemEstoque.TipoItemEstoqueId = novoItem.TipoDeItemId;
+                    itemEstoque.DataHora = DateTime.Now;
+                    itemEstoque.UsuarioId = null;
+                    itemEstoque.Ativo = true;
+
+                    itemEstoqueCore.Alterar(itemEstoque);
+
+                    novoItemEstoque = itemEstoque;
+                }
             //});
             }
 
@@ -96,8 +117,10 @@ namespace GestaoDeEstoque3D.Controllers
             var itemEstoque = itemEstoqueCore.RetornarUltimoAssociadoPorTipoId(TipoItemEstoqueId);
             var prateleiraId = itemEstoque.PrateleiraId;
 
-            itemEstoque.PrateleiraId = null;
-            itemEstoqueCore.Alterar(itemEstoque);
+            //itemEstoque.PrateleiraId = null;
+            //itemEstoqueCore.Alterar(itemEstoque);
+
+            itemEstoqueCore.Deletar(itemEstoque);
 
             var response = new
             {

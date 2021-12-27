@@ -64,7 +64,7 @@ class ItensDeEstoque {
     static Estocar(TipoItemEstoqueId) {
         $.ajax({
             type: "POST",
-            url: "/ControleDeEstoque/EstocarNovoItem",
+            url: "/ControleDeEstoque/EstocarItem",
             data: { TipoItemEstoqueId: TipoItemEstoqueId },
             success: async function (result) {
                 if (result.NovoItemId != -1) {

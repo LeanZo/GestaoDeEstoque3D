@@ -4,8 +4,17 @@
 
         $('#modal-cadastro-estante').css('display', 'flex');
 
-        if (id != null)
+        if (id != null) {
+            $('#cad-estante-header').css('display', 'none');
+            $('#aviso-edit-estante').css('display', 'block');
+            $('#edit-estante-header').css('display', 'block');
+
             this.Carregar(id);
+        } else {
+            $('#edit-estante-header').css('display', 'none');
+            $('#aviso-edit-estante').css('display', 'none');
+            $('#cad-estante-header').css('display', 'block');
+        }
     }
 
     static Fechar() {
