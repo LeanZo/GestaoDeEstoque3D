@@ -12,6 +12,7 @@
 
         $('#modal-pesquisa').val('');
 
+        $('#modal-button-relatorio-inventario').css('display', 'none');
         $('#modal-button-cadastrar-estante').css('display', 'none');
         $('#modal-button-nao-estocados').css('display', 'none');
         $('#modal-button-cadastrar-item').css('display', 'none');
@@ -44,6 +45,7 @@
             $('#modal-pesquisa').val('');
             ModalLista.Filtrar();
 
+            $('#modal-button-relatorio-inventario').css('display', 'block');
             $('#modal-button-cadastrar-estante').css('display', 'block');
             $('#modal-button-nao-estocados').css('display', 'none');
             $('#modal-button-cadastrar-item').css('display', 'none');
@@ -141,6 +143,7 @@
             $('#modal-pesquisa').val('');
             ModalLista.Filtrar();
 
+            $('#modal-button-relatorio-inventario').css('display', 'none');
             $('#modal-button-cadastrar-estante').css('display', 'none');
             $('#modal-button-nao-estocados').css('display', 'block');
             $('#modal-button-cadastrar-item').css('display', 'block');

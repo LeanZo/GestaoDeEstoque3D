@@ -33,6 +33,7 @@
             <div class="modal-inner-container">
                 <div class="modal-lista-header">
                     <input id="modal-pesquisa" type="text" class="modal-input" oninput="ModalLista.Filtrar()" />
+                    <button id="modal-button-relatorio-inventario" class="modal-button" onclick="window.open('/Relatorio/GerarRelatorioCompleto?excel=true', '_blank')" style="display: none; margin-right: calc(-100% + 875px);">Relatório de Inventário</button>
                     <button id="modal-button-cadastrar-estante" class="modal-button" onclick="CadEstante.Abrir()" style="display: none">+ Cadastrar Estante</button>
                     <button id="modal-button-nao-estocados" class="modal-button" onclick="CadItem.NaoEstocados.Abrir()" style="display: none; margin-right: calc(-100% + 875px);">Itens não estocados</button>
                     <button id="modal-button-cadastrar-item" class="modal-button" onclick="CadItem.Abrir()" style="display: none">+ Cadastrar Item</button>
