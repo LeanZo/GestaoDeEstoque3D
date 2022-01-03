@@ -226,12 +226,21 @@ function AdicionarCamadas() {
 }
 
 function onEachFeature(feature, layer) {
-    layer.on('contextmenu', function (e) {
-        Ancoragem.EstanteAncoragem = e.target;
-        layer.bindPopup(`
-            <button class="opcao-context-menu" onclick="Ancoragem.Iniciar()">Definir ponto de ancoragem</button>
-        `).openPopup().unbindPopup();
-    });
+    if (feature.properties.CamadaNome == 'Balcão' || feature.properties.CamadaNome == 'Estantes') {
+        layer.on('contextmenu', function (e) {
+            if (e.target.feature.properties.CamadaNome == 'Estantes') {
+                Ancoragem.EstanteAncoragem = e.target;
+                Ancoragem.BalcaoAncoragem = null;
+            } else {
+                Ancoragem.BalcaoAncoragem = e.target;
+                Ancoragem.EstanteAncoragem = null;
+            }
+
+            layer.bindPopup(`
+                <button class="opcao-context-menu" onclick="Ancoragem.Iniciar()">Definir ponto de ancoragem</button>
+            `).openPopup().unbindPopup();
+        });
+    }
 
     layer.on('click', async function (e) {
         await PackContainers();

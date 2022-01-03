@@ -1,22 +1,26 @@
 ﻿class Ancoragem {
     static EstanteAncoragem = null;
+    static BalcaoAncoragem = null;
     static DefinindoAncoragem = false;
 
     static Iniciar() {
-        if (this.EstanteAncoragem != null) {
-            //this.EstanteAncoragem.closePopup();
-            planta.closePopup()
+        planta.closePopup()
 
-            $('#snackbar-ancoragem').css('visibility', 'visible');
+        $('#snackbar-ancoragem').css('visibility', 'visible');
 
+        this.DefinindoAncoragem = true;
+
+        if (this.EstanteAncoragem != null)
             this.EstanteAncoragem.setStyle({ fillOpacity: 0.6 });
-
-            this.DefinindoAncoragem = true;
-        }
+        else
+            this.BalcaoAncoragem.setStyle({ fillOpacity: 0.6 });
     }
 
     static DefinirPonto(latlng, callback = () => { }) {
-        var estante = estantesAssociadas.find(i => i.PoligonoId == this.EstanteAncoragem.feature.properties.PoligonoId);
+        var estante = { Id: -1 };
+
+        if (this.EstanteAncoragem != null)
+            estante = estantesAssociadas.find(i => i.PoligonoId == this.EstanteAncoragem.feature.properties.PoligonoId);
 
         var parametrosAjax = { EstanteId: estante.Id, Lat: latlng.lat, Lng: latlng.lng };
         $.ajax({
@@ -37,8 +41,11 @@
 
         if (this.EstanteAncoragem != null)
             this.EstanteAncoragem.setStyle({ fillOpacity: 0.2 });
+        else
+            this.BalcaoAncoragem.setStyle({ fillOpacity: 0.2 });
 
         this.EstanteAncoragem = null;
+        this.BalcaoAncoragem = null;
 
         this.DefinindoAncoragem = false;
     }

@@ -299,14 +299,27 @@ namespace GestaoDeEstoque3D.Controllers
         }
         public JsonResult DefinirPontoDeAncoragem(int EstanteId, float Lat, float Lng)
         {
-            var core = new EstanteCore();
+            if(EstanteId == -1)
+            {
+                var core = new SistemaConfiguracaoCore();
 
-            var estante = core.RetornarPorId(EstanteId);
+                var balcaoAncoragem = core.RetornarPorNome("balcao-ancoragem-latlng");
 
-            estante.AncoragemLat = Lat;
-            estante.AncoragemLng = Lng;
+                balcaoAncoragem.Valor = @"{""lat"":" + Lat.ToString().Replace(",", ".") + @",""lng"":" + Lng.ToString().Replace(",", ".") + "}";
 
-            core.Alterar(estante);
+                core.Alterar(balcaoAncoragem);
+            }
+            else
+            {
+                var core = new EstanteCore();
+
+                var estante = core.RetornarPorId(EstanteId);
+
+                estante.AncoragemLat = Lat;
+                estante.AncoragemLng = Lng;
+
+                core.Alterar(estante);
+            }
 
             return Json("", JsonRequestBehavior.AllowGet);
         }
