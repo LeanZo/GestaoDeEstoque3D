@@ -158,15 +158,15 @@
         });
     }
 
-    static Retirar(id) {
+    static async Retirar(id) {
+        await PackContainers();
+
         $.ajax({
             type: "POST",
             url: "/ControleDeEstoque/RetirarItem",
             data: { TipoItemEstoqueId: id },
             success: async function (result) {
                 if (result.ItemId != -1) {
-                    //await PackContainers();
-
                     view3D.UnpackAllItemsInRender();
 
                     var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == result.PrateleiraId);

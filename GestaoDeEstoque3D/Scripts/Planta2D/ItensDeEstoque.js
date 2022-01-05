@@ -112,15 +112,15 @@ class ItensDeEstoque {
         $('#ModalRetirarItensDeEstoque').css('display', 'flex');
     }
 
-    static Retirar(TipoItemEstoqueId) {
+    static async Retirar(TipoItemEstoqueId) {
+        await PackContainers();
+
         $.ajax({
             type: "POST",
             url: "/ControleDeEstoque/RetirarItem",
             data: { TipoItemEstoqueId: TipoItemEstoqueId },
             success: async function (result) {
                 if (result.ItemId != -1) {
-                    //await PackContainers();
-
                     view3D.UnpackAllItemsInRender();
 
                     var containerPackingResult = ContainerPackingResult.find(elem => elem.ContainerID == result.EstanteId);

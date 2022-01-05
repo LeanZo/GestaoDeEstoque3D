@@ -27,13 +27,18 @@ namespace GestaoDeEstoque3D.Controllers
                     var items = new List<OnlineContainerPacking.Models.Item>();
                     prateleira.ItemsEstoque.OrderByDescending(i => i.PackY).ToList().ForEach(itemEstoque => {
                         var TipoItemEstoque = itemEstoque.TipoItemEstoque;
-                        var _itemContainerPacking = new OnlineContainerPacking.Models.Item(itemEstoque.Id, Convert.ToDecimal(TipoItemEstoque.Largura), Convert.ToDecimal(TipoItemEstoque.Altura), Convert.ToDecimal(TipoItemEstoque.Profundidade), Convert.ToDecimal(itemEstoque.PackX), Convert.ToDecimal(itemEstoque.PackY), Convert.ToDecimal(itemEstoque.PackZ), 1, TipoItemEstoque.Id, itemEstoque.ItemBaseId);
+                        var _itemContainerPacking = new OnlineContainerPacking.Models.Item(itemEstoque.Id, Convert.ToDecimal(TipoItemEstoque.Largura), Convert.ToDecimal(TipoItemEstoque.Altura), Convert.ToDecimal(TipoItemEstoque.Profundidade), Convert.ToDecimal(itemEstoque.PackX), Convert.ToDecimal(itemEstoque.PackY), Convert.ToDecimal(itemEstoque.PackZ), 1, TipoItemEstoque.Id, itemEstoque.ItemBaseId, TipoItemEstoque.Peso ?? 0, TipoItemEstoque.PesoMaximoEmpilhamento ?? 1);
 
                         if (itemEstoque.PackY == 0) //É um item base
                         {
                             _itemContainerPacking.ItensEmpilhados = items.Where(i => i.ItemBaseId == _itemContainerPacking.ID).OrderBy(i => i.CoordY).ToList();
 
                             if (Convert.ToDecimal(estante.AlturaPrateleiras) < _itemContainerPacking.Dim2 * (_itemContainerPacking.ItensEmpilhados.Count + 2))
+                            {
+                                _itemContainerPacking.EmpilhamentoDisponivel = false;
+                            }
+                            
+                            if ((_itemContainerPacking.ItensEmpilhados.Count + 1) * _itemContainerPacking.Peso > _itemContainerPacking.PesoMaximo)
                             {
                                 _itemContainerPacking.EmpilhamentoDisponivel = false;
                             }
