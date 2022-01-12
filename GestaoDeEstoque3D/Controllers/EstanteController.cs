@@ -266,12 +266,29 @@ namespace GestaoDeEstoque3D.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public void AdicionarEstanteAoMapa(int EstanteId)
+        public void AdicionarEstanteAoMapa(int EstanteId, double? Lat, double? Lng)
         {
             var estante = new EstanteCore().RetornarPorId(EstanteId);
             var poligono = new PoligonoCore().RetornarPorId(estante.PoligonoId ?? 0);
             
             poligono.Ativo = true;
+
+            if(Lat != null && Lng != null)
+            {
+                var _lat = Lat.ToString().Replace(",", ".");
+                var _lng = Lng.ToString().Replace(",", ".");
+                //var Largura = estante.LarguraPrateleiras.ToString().Replace(",", ".");
+                //var Profundidade = estante.ProfundidadePrateleiras.ToString().Replace(",", ".");
+                var _lgnLargura = (Lng + estante.LarguraPrateleiras).ToString().Replace(",", ".");
+                var _latProfundidade = (Lat + estante.ProfundidadePrateleiras).ToString().Replace(",", ".");
+
+                var novasCoordenadas = $"[[[{_lng},{_lat}],[{_lgnLargura},{_lat}],[{_lgnLargura},{_latProfundidade}],[{_lng},{_latProfundidade}],[{_lng},{_lat}]]]";
+
+                var geojson = JsonConvert.DeserializeObject<dynamic>(poligono.Geojson);
+                geojson.geometry.coordinates = JsonConvert.DeserializeObject<dynamic>(novasCoordenadas);
+                
+                poligono.Geojson = JsonConvert.SerializeObject(geojson);
+            }
 
             new PoligonoCore().Alterar(poligono);
         }

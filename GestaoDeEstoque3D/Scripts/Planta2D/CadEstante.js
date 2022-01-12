@@ -133,18 +133,19 @@
     }
 
     static AdicionarAoMapa(id) {
-    $.ajax({
-        type: "POST",
-        url: "/Estante/AdicionarEstanteAoMapa",
-        data: { EstanteId: id },
-        success: function (result) {
-            CarregarCamadas();
+        var centroMapa = planta.getCenter();
+        $.ajax({
+            type: "POST",
+            url: "/Estante/AdicionarEstanteAoMapa",
+            data: { EstanteId: id, Lat: centroMapa.lat, Lng: centroMapa.lng },
+            success: function (result) {
+                CarregarCamadas();
 
-            ModalLista.Fechar();
-        },
-        error: function (req, status, error) {
-            console.log("Erro.");
-        }
-    });
-}
+                ModalLista.Fechar();
+            },
+            error: function (req, status, error) {
+                console.log("Erro.");
+            }
+        });
+    }
 }
