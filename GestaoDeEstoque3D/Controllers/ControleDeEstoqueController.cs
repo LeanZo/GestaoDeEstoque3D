@@ -11,9 +11,13 @@ namespace GestaoDeEstoque3D.Controllers
 {
     public class ControleDeEstoqueController : Controller
     {
-        // GET: ControleDeEstoque
         public JsonResult EstocarItem(int TipoItemEstoqueId, int? ItemEstoqueId = null)
         {
+            var tipoItemEstoque = new TipoItemEstoqueCore().RetornarPorId(TipoItemEstoqueId);
+            var novoItem = new OnlineContainerPacking.Models.Item(-1, Convert.ToDecimal(tipoItemEstoque.Largura), Convert.ToDecimal(tipoItemEstoque.Altura), Convert.ToDecimal(tipoItemEstoque.Profundidade), 1, tipoItemEstoque.Id);
+            novoItem.Peso = tipoItemEstoque.Peso ?? 0;
+            novoItem.PesoMaximo = tipoItemEstoque.PesoMaximoEmpilhamento ?? 0;
+
             //===Carrega containers/estantes=====================
             var estanteCore = new EstanteCore();
             var itemEstoqueCore = new ItemEstoqueCore();
@@ -24,6 +28,11 @@ namespace GestaoDeEstoque3D.Controllers
             {
                 estante.Prateleiras.OrderBy(p => p.Nivel).ToList().ForEach(prateleira =>
                 {
+                    //Ignora prateleira que nao suportam mais peso
+                    var pesoAtual = prateleira.ItemsEstoque.Sum(item => item.TipoItemEstoque.Peso ?? 0);
+                    if (pesoAtual + novoItem.Peso > estante.PesoMaximoPrateleiras)
+                        return;
+
                     var items = new List<OnlineContainerPacking.Models.Item>();
                     prateleira.ItemsEstoque.OrderByDescending(i => i.PackY).ToList().ForEach(itemEstoque => {
                         var TipoItemEstoque = itemEstoque.TipoItemEstoque;
@@ -53,9 +62,6 @@ namespace GestaoDeEstoque3D.Controllers
             });
             //=====================================================
 
-            var tipoItemEstoque = new TipoItemEstoqueCore().RetornarPorId(TipoItemEstoqueId);
-            var novoItem = new OnlineContainerPacking.Models.Item(-1, Convert.ToDecimal(tipoItemEstoque.Largura), Convert.ToDecimal(tipoItemEstoque.Altura), Convert.ToDecimal(tipoItemEstoque.Profundidade), 1, tipoItemEstoque.Id);
-            
             var itemsToPack = new List<OnlineContainerPacking.Models.Item>();
             itemsToPack.Add(novoItem);
 
