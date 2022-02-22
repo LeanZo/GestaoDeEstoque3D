@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoDeEstoque3D", "GestaoDeEstoque3D\GestaoDeEstoque3D.csproj", "{525B343F-6543-42BA-A41E-2A84FCC4C8C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineContainerPacking", "C:\Users\Nerv\Downloads\3DContainerPacking\3DContainerPacking-master\src\LeanContainerPacking\OnlineContainerPacking.csproj", "{6B818553-E094-4BDA-8687-B6E5C5B7441A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineContainerPacking", "OnlineContainerPacking\OnlineContainerPacking.csproj", "{6B818553-E094-4BDA-8687-B6E5C5B7441A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
