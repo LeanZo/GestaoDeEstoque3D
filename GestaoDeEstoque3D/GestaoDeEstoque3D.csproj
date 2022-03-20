@@ -305,6 +305,8 @@
     <Content Include="Views\Planta2D\Index.cshtml" />
     <Content Include="Views\Estante\Index.cshtml" />
     <Content Include="Views\TipoItemEstoque\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Armazem3D - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -321,7 +323,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Nerv\Downloads\3DContainerPacking\3DContainerPacking-master\src\LeanContainerPacking\OnlineContainerPacking.csproj">
+    <ProjectReference Include="..\OnlineContainerPacking\OnlineContainerPacking.csproj">
       <Project>{6b818553-e094-4bda-8687-b6e5c5b7441a}</Project>
       <Name>OnlineContainerPacking</Name>
     </ProjectReference>
